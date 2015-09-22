@@ -27,6 +27,7 @@ public abstract class Table {
                 new String[] {String.valueOf(rowId)}, null, null, null, null);
     }
 
+
     public static long getRowId(Cursor cursor) {
         return getLong(cursor, COLUMN_ID);
     }
@@ -49,6 +50,14 @@ public abstract class Table {
 
     protected static boolean getBoolean(Cursor cursor, String column) {
         return getLong(cursor, column) == 1l;
+    }
+
+    protected static float getFloat(Cursor cursor, String column) {
+        int columnIndex = cursor.getColumnIndex(column);
+        if (columnIndex == -1) {
+            return -1f;
+        }
+        return cursor.getFloat(columnIndex);
     }
 
 }

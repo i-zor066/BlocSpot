@@ -1,6 +1,7 @@
 package com.izor066.android.blocspot.api.model.database.table;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
@@ -36,6 +37,27 @@ public class PointsOfInterestTable extends Table {
         public long insert(SQLiteDatabase writableDB) {
             return writableDB.insert(PointsOfInterestTable.NAME, null, values);
         }
+    }
+
+    public static String getTitle(Cursor cursor) {
+        return getString(cursor, COLUMN_TITLE);
+    }
+
+    public static String getAddress(Cursor cursor) {
+        return getString(cursor, COLUMN_ADDRESS);
+    }
+
+    public static float getLongitude(Cursor cursor) {
+        return getFloat(cursor, COLUMN_LONGITUDE);
+    }
+
+    public static float getLatitude(Cursor cursor) {
+        return getFloat(cursor, COLUMN_LATITUDE);
+    }
+
+    public static Cursor getRowTest(SQLiteDatabase readonlyDatabase, long rowId) {
+        return readonlyDatabase.query(true, NAME, null, COLUMN_ID + " = ?",
+                new String[]{String.valueOf(rowId)}, null, null, null, null);
     }
 
     private static final String NAME ="points_of_interest";

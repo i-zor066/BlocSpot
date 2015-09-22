@@ -14,6 +14,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DataSource dataSource = new DataSource(this);
+        dataSource.DatabaseTest(1l);
+        dataSource.DatabaseTest(2l);
+        dataSource.DatabaseTest(3l);
+        dataSource.DatabaseTest(4l);
     }
 
     @Override
