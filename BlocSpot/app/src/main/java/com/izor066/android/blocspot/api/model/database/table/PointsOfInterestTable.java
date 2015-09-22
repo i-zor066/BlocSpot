@@ -47,12 +47,14 @@ public class PointsOfInterestTable extends Table {
         return getString(cursor, COLUMN_ADDRESS);
     }
 
-    public static float getLongitude(Cursor cursor) {
-        return getFloat(cursor, COLUMN_LONGITUDE);
-    }
+
 
     public static float getLatitude(Cursor cursor) {
         return getFloat(cursor, COLUMN_LATITUDE);
+    }
+
+    public static float getLongitude(Cursor cursor) {
+        return getFloat(cursor, COLUMN_LONGITUDE);
     }
 
     public static Cursor getRowTest(SQLiteDatabase readonlyDatabase, long rowId) {
@@ -60,12 +62,17 @@ public class PointsOfInterestTable extends Table {
                 new String[]{String.valueOf(rowId)}, null, null, null, null);
     }
 
+    public static Cursor getRowFromTitle(SQLiteDatabase readonlyDatabase, String title) {
+        return readonlyDatabase.query(true, NAME, null, COLUMN_TITLE + " = ?",
+                new String[]{title}, null, null, null, null);
+    }
+
     private static final String NAME ="points_of_interest";
 
     private static final String COLUMN_TITLE = "title";
     private static final String COLUMN_ADDRESS = "address";
-    private static final String COLUMN_LONGITUDE = "longitude";
     private static final String COLUMN_LATITUDE = "latitude";
+    private static final String COLUMN_LONGITUDE = "longitude";
 
     @Override
     public String getName() {
@@ -78,7 +85,7 @@ public class PointsOfInterestTable extends Table {
                 + COLUMN_ID + " INTEGER PRIMARY KEY,"
                 + COLUMN_TITLE + " TEXT,"
                 + COLUMN_ADDRESS + " TEXT,"
-                + COLUMN_LONGITUDE + " REAL,"
-                + COLUMN_LATITUDE + " REAL)";
+                + COLUMN_LATITUDE + " REAL,"
+                + COLUMN_LONGITUDE + " REAL)";
     }
 }
