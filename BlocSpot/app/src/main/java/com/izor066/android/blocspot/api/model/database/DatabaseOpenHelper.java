@@ -11,7 +11,7 @@ import com.izor066.android.blocspot.api.model.database.table.Table;
  */
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
-    private static final String NAME = "blocspot_db";
+    public static final String NAME = "blocspot_db";
 
     private static final int VERSION = 1;
 

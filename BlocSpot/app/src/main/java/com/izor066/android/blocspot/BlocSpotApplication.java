@@ -9,6 +9,9 @@ import com.izor066.android.blocspot.api.DataSource;
  */
 public class BlocSpotApplication  extends Application {
 
+    private static BlocSpotApplication sharedInstance;
+    private DataSource dataSource;
+
     public static BlocSpotApplication getSharedInstance() {
         return sharedInstance;
     }
@@ -17,8 +20,7 @@ public class BlocSpotApplication  extends Application {
         return BlocSpotApplication.getSharedInstance().getDataSource();
     }
 
-    private static BlocSpotApplication sharedInstance;
-    private DataSource dataSource;
+
 
     @Override
     public void onCreate() {

@@ -3,14 +3,14 @@ package com.izor066.android.blocspot.api.model;
 /**
  * Created by igor on 22/9/15.
  */
-public class PointsOfInterest {
+public class PointOfInterest {
 
-    private String title;
-    private String address;
-    private float longitude;
-    private float latitude;
+    private final String title;
+    private final String address;
+    private final float longitude;
+    private final float latitude;
 
-    public PointsOfInterest(String title, String address, float latitude, float longitude ) {
+    public PointOfInterest(String title, String address, float latitude, float longitude) {
 
         this.title = title;
         this.address = address;

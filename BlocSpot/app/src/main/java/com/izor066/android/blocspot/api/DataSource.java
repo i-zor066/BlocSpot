@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.izor066.android.blocspot.BuildConfig;
-import com.izor066.android.blocspot.api.model.PointsOfInterest;
+import com.izor066.android.blocspot.api.model.PointOfInterest;
 import com.izor066.android.blocspot.api.model.database.DatabaseOpenHelper;
 import com.izor066.android.blocspot.api.model.database.table.PointsOfInterestTable;
 
@@ -18,35 +18,36 @@ public class DataSource {
     private PointsOfInterestTable pointsOfInterestTable;
 
 
-
-    public DataSource (Context context) {
+    public DataSource(Context context) {
         pointsOfInterestTable = new PointsOfInterestTable();
         databaseOpenHelper = new DatabaseOpenHelper(context, pointsOfInterestTable);
 
-        if (BuildConfig.DEBUG && true) {
-            context.deleteDatabase("blocspot_db");
+        if (BuildConfig.DEBUG) {
+            context.deleteDatabase(DatabaseOpenHelper.NAME);
             SQLiteDatabase writableDatabase = databaseOpenHelper.getWritableDatabase();
-            new PointsOfInterestTable.Builder()
-                    .setTitle("")
-                    .insert(writableDatabase);
+
         }
     }
 
-    public void insertPointToDatabase(PointsOfInterest pointsOfInterest) {
+    public void insertPointToDatabase(PointOfInterest pointOfInterest) {
         SQLiteDatabase writableDatabase = databaseOpenHelper.getWritableDatabase();
         new PointsOfInterestTable.Builder()
-                .setTitle(pointsOfInterest.getTitle())
-                .setAddress(pointsOfInterest.getAddress())
-                .setLatitude(pointsOfInterest.getLatitude())
-                .setLongitude(pointsOfInterest.getLongitude())
+                .setTitle(pointOfInterest.getTitle())
+                .setAddress(pointOfInterest.getAddress())
+                .setLatitude(pointOfInterest.getLatitude())
+                .setLongitude(pointOfInterest.getLongitude())
                 .insert(writableDatabase);
     }
 
-    public PointsOfInterest getPOIfromDBwithTitle (String title) {
+    public PointOfInterest getPOIfromDBwithTitle(String title) {
         Cursor cursor = PointsOfInterestTable.getRowFromTitle(databaseOpenHelper.getReadableDatabase(), title);
         cursor.moveToFirst();
-        PointsOfInterest pointsOfInterest = new PointsOfInterest(title, PointsOfInterestTable.getAddress(cursor), PointsOfInterestTable.getLatitude(cursor), PointsOfInterestTable.getLongitude(cursor));
-        return pointsOfInterest;
+        String address = PointsOfInterestTable.getAddress(cursor);
+        float latitude = PointsOfInterestTable.getLatitude(cursor);
+        float longitude = PointsOfInterestTable.getLongitude(cursor);
+        PointOfInterest pointOfInterest = new PointOfInterest(title, address, latitude, longitude);
+        cursor.close();
+        return pointOfInterest;
     }
 
 }

@@ -9,6 +9,13 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class PointsOfInterestTable extends Table {
 
+    private static final String NAME ="points_of_interest";
+
+    private static final String COLUMN_TITLE = "title";
+    private static final String COLUMN_ADDRESS = "address";
+    private static final String COLUMN_LATITUDE = "latitude";
+    private static final String COLUMN_LONGITUDE = "longitude";
+
     public static class Builder implements Table.Builder {
 
         ContentValues values = new ContentValues();
@@ -67,12 +74,7 @@ public class PointsOfInterestTable extends Table {
                 new String[]{title}, null, null, null, null);
     }
 
-    private static final String NAME ="points_of_interest";
 
-    private static final String COLUMN_TITLE = "title";
-    private static final String COLUMN_ADDRESS = "address";
-    private static final String COLUMN_LATITUDE = "latitude";
-    private static final String COLUMN_LONGITUDE = "longitude";
 
     @Override
     public String getName() {
