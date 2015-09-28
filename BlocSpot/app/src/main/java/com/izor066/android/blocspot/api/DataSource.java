@@ -49,20 +49,20 @@ public class DataSource {
             new PointsOfInterestTable.Builder()
                     .setTitle("Google 2")
                     .setAddress("1-13 St Giles High St, London WC2H 8LG, United Kingdom")
-                    .setLatitude(51.5160563f)
-                    .setLongitude(-0.1271485f)
+                    .setLatitude(51.5169573f)
+                    .setLongitude(-0.1279495f)
                     .insert(writableDatabase);
             new PointsOfInterestTable.Builder()
                     .setTitle("Facebook London 2")
                     .setAddress("10 Brock St, Kings Cross, London NW1 3FG, United Kingdom")
-                    .setLatitude(51.5261296f)
-                    .setLongitude(-0.1394121f)
+                    .setLatitude(51.5269276f)
+                    .setLongitude(-0.1399191f)
                     .insert(writableDatabase);
             new PointsOfInterestTable.Builder()
                     .setTitle("Twitter HQ 2")
                     .setAddress("Air St, Soho, London W1B 5AG, United Kingdom")
-                    .setLatitude(51.5104794f)
-                    .setLongitude(-0.1366545f)
+                    .setLatitude(51.5104224f)
+                    .setLongitude(-0.1362595f)
                     .insert(writableDatabase);
 
         }

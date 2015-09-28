@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.izor066.android.blocspot.ui.fragment.PointsOfInterestMapFragment;
 import com.izor066.android.blocspot.ui.fragment.PointsOfInterestFragmentList;
+import com.izor066.android.blocspot.ui.fragment.PointsOfInterestMapFragment;
 
 /**
  * Created by igor on 27/9/15.
@@ -15,6 +15,7 @@ public class TabAdapter extends FragmentStatePagerAdapter {
 
     CharSequence mTitles[];
     int mNumbOfTabs;
+
 
 
     public TabAdapter(FragmentManager fm, CharSequence Titles[], int NumbOfTabsumb) {

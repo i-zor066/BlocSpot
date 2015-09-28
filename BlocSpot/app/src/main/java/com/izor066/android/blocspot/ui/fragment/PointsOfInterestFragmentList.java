@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,31 @@ public class PointsOfInterestFragmentList extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(itemAdapter);
+        Log.v("POIFragmentList", "OnActivityCreated");
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.v("POIFragmentList", "OnResume");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.v("POIFragmentList", "OnPause");
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.v("POIFragmentList", "OnDestroy");
+
+    }
+
+
 
 
 }
