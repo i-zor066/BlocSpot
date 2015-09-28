@@ -74,6 +74,10 @@ public class PointsOfInterestTable extends Table {
                 new String[]{title}, null, null, null, null);
     }
 
+    public static Cursor fetchAllPointsOfInterest(SQLiteDatabase readonlyDatabase) {
+        return readonlyDatabase.rawQuery("SELECT * FROM " + NAME + " ORDER BY ?", new String[]{COLUMN_TITLE});
+    }
+
 
 
     @Override
