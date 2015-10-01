@@ -29,7 +29,6 @@ import java.util.List;
 public class PointsOfInterestMapFragment extends Fragment {
 
 
-
     MapView mapView;
     private GoogleMap googleMap;
 
@@ -61,18 +60,21 @@ public class PointsOfInterestMapFragment extends Fragment {
         float lon = pointsOfInterest.get(0).getLongitude();
 
         for (int i = 0; i < size; i++) {
-        String title = pointsOfInterest.get(i).getTitle();
-        lat = pointsOfInterest.get(i).getLatitude();
-        lon = pointsOfInterest.get(i).getLongitude();
+            String title = pointsOfInterest.get(i).getTitle();
+            lat = pointsOfInterest.get(i).getLatitude();
+            lon = pointsOfInterest.get(i).getLongitude();
+            String address = pointsOfInterest.get(i).getAddress();
 
-        MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(lat, lon)).title(title);
+            MarkerOptions marker = new MarkerOptions().position(
+                    new LatLng(lat, lon)).title(title).snippet(address);
 
-        marker.icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+            marker.icon(BitmapDescriptorFactory
+                    .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
 
-        googleMap.addMarker(marker);}
+            googleMap.addMarker(marker);
+
+        }
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(lat, lon)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory
@@ -81,6 +83,7 @@ public class PointsOfInterestMapFragment extends Fragment {
 
         return view;
     }
+
 
     @Override
     public void onResume() {
