@@ -29,7 +29,7 @@ public class DataSource {
         if (BuildConfig.DEBUG) {
             context.deleteDatabase(DatabaseOpenHelper.NAME);
             SQLiteDatabase writableDatabase = databaseOpenHelper.getWritableDatabase();
-            new PointsOfInterestTable.Builder()
+         /*  new PointsOfInterestTable.Builder()
                     .setTitle("Google")
                     .setAddress("1-13 St Giles High St, London WC2H 8LG, United Kingdom")
                     .setLatitude(51.5160563f)
@@ -64,7 +64,8 @@ public class DataSource {
                     .setAddress("555 King's Rd, London SW6 2EB, United Kingdom")
                     .setLatitude(51.479068f)
                     .setLongitude(-0.1874554f)
-                    .insert(writableDatabase);
+                    .insert(writableDatabase);*/
+
 
         }
     }

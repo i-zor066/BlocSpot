@@ -111,4 +111,5 @@ public class PointsOfInterestMapFragment extends Fragment {
         super.onLowMemory();
         mapView.onLowMemory();
     }
+
 }

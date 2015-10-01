@@ -38,11 +38,11 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        itemAdapter = new ItemAdapter();
+        itemAdapter = new ItemAdapter(); // itemadapter equals new itemadapter.this
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(itemAdapter);
-        itemAdapter.setDelegate(this);
+        itemAdapter.setDelegate(this); // remove
         Log.v("POIFragmentList", "OnActivityCreated");
     }
 
@@ -75,5 +75,5 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
         Intent intent = new Intent(getActivity(), MapPane.class);
         intent.putExtra("poi", pointOfInterest);
         startActivity(intent);
-    }
+    } // OnPointOfInterestClick
 }

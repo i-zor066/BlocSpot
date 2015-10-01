@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.izor066.android.blocspot.R;
-import com.izor066.android.blocspot.api.DataSource;
 import com.izor066.android.blocspot.ui.adapter.TabAdapter;
 import com.izor066.android.blocspot.ui.widget.tabs.SlidingTabLayout;
 
@@ -25,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DataSource dataSource = new DataSource(this);
+        //DataSource dataSource = new DataSource(this);
         setContentView(R.layout.activity_main);
 
 
