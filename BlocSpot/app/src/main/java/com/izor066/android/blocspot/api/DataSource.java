@@ -8,6 +8,7 @@ import com.izor066.android.blocspot.BuildConfig;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
 import com.izor066.android.blocspot.api.model.database.DatabaseOpenHelper;
 import com.izor066.android.blocspot.api.model.database.table.PointsOfInterestTable;
+import com.izor066.android.blocspot.api.model.database.table.Table;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,10 +82,23 @@ public class DataSource {
     public PointOfInterest getPOIfromDBwithTitle(String title) {
         Cursor cursor = PointsOfInterestTable.getRowFromTitle(databaseOpenHelper.getReadableDatabase(), title);
         cursor.moveToFirst();
+        long rowId = Table.getRowId(cursor);
         String address = PointsOfInterestTable.getAddress(cursor);
         float latitude = PointsOfInterestTable.getLatitude(cursor);
         float longitude = PointsOfInterestTable.getLongitude(cursor);
-        PointOfInterest pointOfInterest = new PointOfInterest(title, address, latitude, longitude);
+        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude);
+        cursor.close();
+        return pointOfInterest;
+    }
+
+    public PointOfInterest getPOIfromDBwithRowId(long rowId) {
+        Cursor cursor = PointsOfInterestTable.getRowWithId(databaseOpenHelper.getReadableDatabase(), rowId);
+        cursor.moveToFirst();
+        String title = PointsOfInterestTable.getTitle(cursor);
+        String address = PointsOfInterestTable.getAddress(cursor);
+        float latitude = PointsOfInterestTable.getLatitude(cursor);
+        float longitude = PointsOfInterestTable.getLongitude(cursor);
+        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude);
         cursor.close();
         return pointOfInterest;
     }
@@ -105,11 +119,12 @@ public class DataSource {
 
     static PointOfInterest PointOfInterestFromCursor(Cursor cursor) {
         //cursor.moveToFirst();
+        long rowId = Table.getRowId(cursor);
         String title = PointsOfInterestTable.getTitle(cursor);
         String address = PointsOfInterestTable.getAddress(cursor);
         float latitude = PointsOfInterestTable.getLatitude(cursor);
         float longitude = PointsOfInterestTable.getLongitude(cursor);
-        PointOfInterest pointOfInterest = new PointOfInterest(title, address, latitude, longitude);
+        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude);
         //cursor.close();
         return pointOfInterest;
     }

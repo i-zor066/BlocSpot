@@ -1,6 +1,7 @@
 package com.izor066.android.blocspot.ui.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.izor066.android.blocspot.R;
+import com.izor066.android.blocspot.api.model.PointOfInterest;
+import com.izor066.android.blocspot.ui.MapPane;
 import com.izor066.android.blocspot.ui.adapter.ItemAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PointsOfInterestFragmentList extends Fragment {
+public class PointsOfInterestFragmentList extends Fragment implements ItemAdapter.Delegate {
 
     private RecyclerView recyclerView;
     private ItemAdapter itemAdapter;
@@ -39,6 +42,7 @@ public class PointsOfInterestFragmentList extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(itemAdapter);
+        itemAdapter.setDelegate(this);
         Log.v("POIFragmentList", "OnActivityCreated");
     }
 
@@ -63,7 +67,13 @@ public class PointsOfInterestFragmentList extends Fragment {
 
     }
 
+    // ItemAdapter.delegate
 
-
-
+    @Override
+    public void onItemClicked(ItemAdapter itemAdapter, PointOfInterest pointOfInterest) {
+        //Toast.makeText(getActivity(), pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), MapPane.class);
+        intent.putExtra("poi", pointOfInterest);
+        startActivity(intent);
+    }
 }

@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.MapPane"
+            android:label="Point Of Interest">
+
+        </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBCi7gh3AtMiOYj7Q0BgAtI9l84q4zyftg"/>

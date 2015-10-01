@@ -8,17 +8,24 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.izor066.android.blocspot.BlocSpotApplication;
 import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.api.DataSource;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by igor on 28/9/15.
  */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterViewHolder> {
+
+    public static interface Delegate {
+        public void onItemClicked(ItemAdapter itemAdapter, PointOfInterest pointOfInterest);
+    }
+
+    private WeakReference<Delegate> delegate;
 
     @Override
     public ItemAdapter.ItemAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -36,6 +43,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
     @Override
     public int getItemCount() {
         return BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
+    }
+
+    public Delegate getDelegate() {
+        if (delegate == null) {
+            return null;
+        }
+        return delegate.get();
+    }
+
+    public void setDelegate(Delegate delegate) {
+        this.delegate = new WeakReference<Delegate>(delegate);
     }
 
 
@@ -68,7 +86,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(itemView.getContext(), pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
+            getDelegate().onItemClicked(ItemAdapter.this, pointOfInterest);
+           // Toast.makeText(itemView.getContext(), pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
         }
 
         // OnCheckedChangedListener
