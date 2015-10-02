@@ -21,10 +21,21 @@ import com.izor066.android.blocspot.ui.adapter.ItemAdapter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PointsOfInterestFragmentList extends Fragment implements ItemAdapter.Delegate {
+public class PointsOfInterestFragmentList extends Fragment implements ItemAdapter.OnPointOfInterestClickListener {
+
 
     private RecyclerView recyclerView;
     private ItemAdapter itemAdapter;
+
+   /* public interface OnPointOfInterestClickListener {
+        void onPointOfInterestClick(PointOfInterest pointOfInterest);
+    }
+
+    private final OnPointOfInterestClickListener listener;
+
+    public PointsOfInterestFragmentList(OnPointOfInterestClickListener listener) {
+        this.listener = listener;
+    }*/
 
 
 
@@ -38,11 +49,10 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        itemAdapter = new ItemAdapter(); // itemadapter equals new itemadapter.this
+        itemAdapter = new ItemAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(itemAdapter);
-        itemAdapter.setDelegate(this); // remove
         Log.v("POIFragmentList", "OnActivityCreated");
     }
 
@@ -67,13 +77,15 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
 
     }
 
-    // ItemAdapter.delegate
+
+    // ItemAdapter.OnPointOfInterestClickListener
+
 
     @Override
-    public void onItemClicked(ItemAdapter itemAdapter, PointOfInterest pointOfInterest) {
-        //Toast.makeText(getActivity(), pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getActivity(), MapPane.class);
+    public void OnPointOfInterestClick(PointOfInterest pointOfInterest) {
+       Intent intent = new Intent(getActivity(), MapPane.class);
         intent.putExtra("poi", pointOfInterest);
         startActivity(intent);
-    } // OnPointOfInterestClick
+        /* listener.onPointOfInterestClick(pointOfInterest);*/
+    }
 }

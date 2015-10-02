@@ -11,7 +11,7 @@ import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.ui.adapter.TabAdapter;
 import com.izor066.android.blocspot.ui.widget.tabs.SlidingTabLayout;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity /*implements PointsOfInterestFragmentList.OnPointOfInterestClickListener*/ {
 
 
     Toolbar toolbar;
@@ -24,7 +24,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //DataSource dataSource = new DataSource(this);
         setContentView(R.layout.activity_main);
 
 
@@ -53,7 +52,9 @@ public class MainActivity extends ActionBarActivity {
         tabs.setViewPager(pager);
 
 
+
     }
+
 
 
     @Override
@@ -72,4 +73,22 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    /*@Override
+    onAttach(Activity activity) {
+        this.listener = (OnPointOfInterestClickListener) activity;
+    }*/
+
+
+
+    /* PointsOfInterestFragmentList.OnPointOfInterestClickListener
+
+    @Override
+    public void OnPointOfInterestClick(PointOfInterest pointOfInterest) {
+        Intent intent = new Intent(this, MapPane.class);
+        intent.putExtra("poi", pointOfInterest);
+        startActivity(intent);
+    }*/
+
+
 }

@@ -14,18 +14,20 @@ import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.api.DataSource;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
 
-import java.lang.ref.WeakReference;
-
 /**
  * Created by igor on 28/9/15.
  */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterViewHolder> {
 
-    public static interface Delegate {
-        public void onItemClicked(ItemAdapter itemAdapter, PointOfInterest pointOfInterest);
+    public static interface OnPointOfInterestClickListener {
+        public void OnPointOfInterestClick(PointOfInterest pointOfInterest);
     }
 
-    private WeakReference<Delegate> delegate;
+    private final OnPointOfInterestClickListener listener;
+
+    public ItemAdapter(OnPointOfInterestClickListener listener) {
+        this.listener = listener;
+    }
 
     @Override
     public ItemAdapter.ItemAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -36,24 +38,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
     @Override
     public void onBindViewHolder(ItemAdapter.ItemAdapterViewHolder itemAdapterViewHolder, int i) {
         DataSource sharedDataSource = BlocSpotApplication.getSharedDataSource();
-        itemAdapterViewHolder.update(sharedDataSource.getAllPointsOfInterest().get(i));
+        itemAdapterViewHolder.update(sharedDataSource.getAllPointsOfInterest().get(i), listener);
 
     }
 
     @Override
     public int getItemCount() {
         return BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
-    }
-
-    public Delegate getDelegate() {
-        if (delegate == null) {
-            return null;
-        }
-        return delegate.get();
-    }
-
-    public void setDelegate(Delegate delegate) {
-        this.delegate = new WeakReference<Delegate>(delegate);
     }
 
 
@@ -64,6 +55,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
         TextView address;
         CheckBox visited;
         PointOfInterest pointOfInterest;
+        OnPointOfInterestClickListener listener;
 
         public ItemAdapterViewHolder(View itemView) {
             super(itemView);
@@ -75,10 +67,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
             visited.setOnCheckedChangeListener(this);
         }
 
-        void update(PointOfInterest pointOfInterest) {
+        void update(PointOfInterest pointOfInterest, OnPointOfInterestClickListener listener) {
             this.pointOfInterest = pointOfInterest;
             title.setText(pointOfInterest.getTitle());
             address.setText(pointOfInterest.getAddress());
+            this.listener = listener;
         }
 
         // OnClickListener
@@ -86,7 +79,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
 
         @Override
         public void onClick(View v) {
-            getDelegate().onItemClicked(ItemAdapter.this, pointOfInterest);
+            listener.OnPointOfInterestClick(pointOfInterest);
            // Toast.makeText(itemView.getContext(), pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
         }
 
