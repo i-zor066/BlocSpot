@@ -35,13 +35,11 @@ public class GeofenceStore implements GoogleApiClient.ConnectionCallbacks, Googl
 
     private ArrayList<Geofence> mGeofences;
 
-    private GeofencingRequest mGeofencingRequest;
-
     private LocationRequest mLocationRequest;
 
     public GeofenceStore(Context context, ArrayList<Geofence> geofences) {
         mContext = context;
-        mGeofences = new ArrayList<Geofence>(geofences);
+        mGeofences = new ArrayList<>(geofences);
         mPendingIntent = null;
 
 
@@ -58,6 +56,7 @@ public class GeofenceStore implements GoogleApiClient.ConnectionCallbacks, Googl
 
     @Override
     public void onResult(Status result) {
+        Log.v(TAG, "Result: " + result + " Success: " + result.isSuccess());
         if (result.isSuccess()) {
             Log.v(TAG, "Success!");
         } else if (result.hasResolution()) {
@@ -66,10 +65,7 @@ public class GeofenceStore implements GoogleApiClient.ConnectionCallbacks, Googl
             Log.v(TAG, "Canceled");
         } else if (result.isInterrupted()) {
             Log.v(TAG, "Interrupted");
-        } else {
-
         }
-
     }
 
     @Override
@@ -79,8 +75,11 @@ public class GeofenceStore implements GoogleApiClient.ConnectionCallbacks, Googl
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        mGeofencingRequest = new GeofencingRequest.Builder().addGeofences(
-                mGeofences).build();
+        GeofencingRequest mGeofencingRequest = new GeofencingRequest.Builder()
+               // .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER) // ToDo: DoubleCheck
+                .addGeofences(mGeofences).build();
+
+
 
         mPendingIntent = createRequestPendingIntent();
 

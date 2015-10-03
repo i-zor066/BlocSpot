@@ -19,5 +19,8 @@
     <string name="geofence_transition_dwell">Move Along!</string>
 
     <string name="geofence_intent_service">Geofence Intent Service</string>
+    <string name="geofence_entered">Approaching Point of Interest</string>
+    <string name="geofence_dwell">Geofence Dwell</string>
+    <string name="geofence_exit">Leaving Point of Interest</string>
 
 </resources>

@@ -28,7 +28,7 @@
             android:label="Point Of Interest">
         </activity>
 
-        <service android:name=".GeoFences.GeofenceIntentService" />
+        <service android:name="com.izor066.android.blocspot.GeoFences.GeofenceIntentService" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

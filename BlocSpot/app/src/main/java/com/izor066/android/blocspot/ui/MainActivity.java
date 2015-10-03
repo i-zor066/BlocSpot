@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.gms.location.Geofence;
-import com.google.android.gms.maps.model.LatLng;
+import com.izor066.android.blocspot.BlocSpotApplication;
 import com.izor066.android.blocspot.GeoFences.GeofenceStore;
 import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
@@ -18,6 +18,7 @@ import com.izor066.android.blocspot.ui.fragment.PointsOfInterestFragmentList;
 import com.izor066.android.blocspot.ui.widget.tabs.SlidingTabLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PointsOfInterestFragmentList.OnPointOfInterestClickListener {
 
@@ -32,10 +33,10 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     // GeoFence Data
 
     ArrayList<Geofence> mGeofences;
-    ArrayList<LatLng> mGeofenceCoordinates;
-    ArrayList<Integer> mGeofenceRadius;
+    private static final int GEOFENCE_RADIUS = 150;
     private GeofenceStore mGeofenceStore;
 
+    List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
 
 
     @Override
@@ -70,60 +71,38 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
 
         // GeoFences
 
-        // Initializing variables
         mGeofences = new ArrayList<Geofence>();
-        mGeofenceCoordinates = new ArrayList<LatLng>();
-        mGeofenceRadius = new ArrayList<Integer>();
 
-        // Adding geofence coordinates to array.
-        mGeofenceCoordinates.add(new LatLng(51.5160563, -0.1271485));
-        mGeofenceCoordinates.add(new LatLng(51.5261296f, -0.1394121f));
-        mGeofenceCoordinates.add(new LatLng(51.5104794f, -0.1366545f));
+        int size = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
 
-        // Adding associated geofence radius' to array.
-        mGeofenceRadius.add(500);
-        mGeofenceRadius.add(500);
-        mGeofenceRadius.add(160);
+        for (int i = 0; i < size; i++) {
+            String title = pointsOfInterest.get(i).getTitle();
+            float lat = pointsOfInterest.get(i).getLatitude();
+            float lon = pointsOfInterest.get(i).getLongitude();
 
-        // Bulding the geofences and adding them to the geofence array.
-
-        mGeofences.add(new Geofence.Builder()
-                .setRequestId("Google HQ")
-                .setCircularRegion(mGeofenceCoordinates.get(0).latitude, mGeofenceCoordinates.get(0).longitude, mGeofenceRadius.get(0).intValue())
-                .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setLoiteringDelay(30000)
-                .setTransitionTypes(
-                        Geofence.GEOFENCE_TRANSITION_ENTER
-                                | Geofence.GEOFENCE_TRANSITION_DWELL
-                                | Geofence.GEOFENCE_TRANSITION_EXIT).build());
-
-        mGeofences.add(new Geofence.Builder()
-                .setRequestId("Facebook London")
-                        // The coordinates of the center of the geofence and the radius in meters.
-                .setCircularRegion(mGeofenceCoordinates.get(1).latitude, mGeofenceCoordinates.get(1).longitude, mGeofenceRadius.get(1).intValue())
-                .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                        // Required when we use the transition type of GEOFENCE_TRANSITION_DWELL
-                .setLoiteringDelay(30000)
-                .setTransitionTypes(
-                        Geofence.GEOFENCE_TRANSITION_ENTER
-                                | Geofence.GEOFENCE_TRANSITION_DWELL
-                                | Geofence.GEOFENCE_TRANSITION_EXIT).build());
-
-        mGeofences.add(new Geofence.Builder()
-                .setRequestId("Twitter HQ")
-                        // The coordinates of the center of the geofence and the radius in meters.
-                .setCircularRegion(mGeofenceCoordinates.get(1).latitude, mGeofenceCoordinates.get(1).longitude, mGeofenceRadius.get(1).intValue())
-                .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                        // Required when we use the transition type of GEOFENCE_TRANSITION_DWELL
-                .setLoiteringDelay(30000)
-                .setTransitionTypes(
-                        Geofence.GEOFENCE_TRANSITION_ENTER
-                                | Geofence.GEOFENCE_TRANSITION_DWELL
-                                | Geofence.GEOFENCE_TRANSITION_EXIT).build());
+            mGeofences.add(new Geofence.Builder()
+                    .setRequestId(title)
+                    .setCircularRegion(lat, lon, GEOFENCE_RADIUS)
+                    .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                    .setLoiteringDelay(30000)
+                    .setTransitionTypes(
+                            Geofence.GEOFENCE_TRANSITION_ENTER
+//                                    | Geofence.GEOFENCE_TRANSITION_DWELL
+                                    | Geofence.GEOFENCE_TRANSITION_EXIT).build());
+        }
 
         mGeofenceStore = new GeofenceStore(this, mGeofences);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 
 
     @Override
@@ -142,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override

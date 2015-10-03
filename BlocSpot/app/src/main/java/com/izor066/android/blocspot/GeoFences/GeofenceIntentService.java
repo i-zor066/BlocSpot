@@ -48,15 +48,15 @@ public class GeofenceIntentService extends IntentService {
 
             switch(transition) {
                 case Geofence.GEOFENCE_TRANSITION_ENTER:
-                    notificationTitle = "Geofence Entered";
+                    notificationTitle = getString(R.string.geofence_entered);
                     Log.v(TAG, "Geofence Entered");
                     break;
-                case Geofence.GEOFENCE_TRANSITION_DWELL:
-                    notificationTitle = "Geofence Dwell";
-                    Log.v(TAG, "Dwelling in Geofence");
-                    break;
+//                case Geofence.GEOFENCE_TRANSITION_DWELL:
+//                    notificationTitle = getString(R.string.geofence_dwell);
+//                    Log.v(TAG, "Dwelling in Geofence");
+//                    break;
                 case Geofence.GEOFENCE_TRANSITION_EXIT:
-                    notificationTitle = "Geofence Exit";
+                    notificationTitle = getString(R.string.geofence_exit);
                     Log.v(TAG, "Geofence Exited");
                     break;
                 default:
