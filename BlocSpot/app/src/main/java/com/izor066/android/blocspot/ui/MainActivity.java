@@ -1,8 +1,9 @@
 package com.izor066.android.blocspot.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,12 +12,14 @@ import com.google.android.gms.location.Geofence;
 import com.google.android.gms.maps.model.LatLng;
 import com.izor066.android.blocspot.GeoFences.GeofenceStore;
 import com.izor066.android.blocspot.R;
+import com.izor066.android.blocspot.api.model.PointOfInterest;
 import com.izor066.android.blocspot.ui.adapter.TabAdapter;
+import com.izor066.android.blocspot.ui.fragment.PointsOfInterestFragmentList;
 import com.izor066.android.blocspot.ui.widget.tabs.SlidingTabLayout;
 
 import java.util.ArrayList;
 
-public class MainActivity extends ActionBarActivity /*implements PointsOfInterestFragmentList.OnPointOfInterestClickListener*/ {
+public class MainActivity extends AppCompatActivity implements PointsOfInterestFragmentList.OnPointOfInterestClickListener {
 
 
     Toolbar toolbar;
@@ -119,9 +122,6 @@ public class MainActivity extends ActionBarActivity /*implements PointsOfInteres
                                 | Geofence.GEOFENCE_TRANSITION_EXIT).build());
 
         mGeofenceStore = new GeofenceStore(this, mGeofences);
-
-
-
     }
 
 
@@ -143,21 +143,14 @@ public class MainActivity extends ActionBarActivity /*implements PointsOfInteres
         return super.onOptionsItemSelected(item);
     }
 
-    /*@Override
-    onAttach(Activity activity) {
-        this.listener = (OnPointOfInterestClickListener) activity;
-    }*/
 
-
-
-    /* PointsOfInterestFragmentList.OnPointOfInterestClickListener
 
     @Override
-    public void OnPointOfInterestClick(PointOfInterest pointOfInterest) {
+    public void onPointOfInterestClick(PointOfInterest pointOfInterest) {
         Intent intent = new Intent(this, MapPane.class);
         intent.putExtra("poi", pointOfInterest);
         startActivity(intent);
-    }*/
+    }
 
 
 }

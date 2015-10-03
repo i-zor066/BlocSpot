@@ -30,7 +30,6 @@ public class PointsOfInterestMapFragment extends Fragment {
 
 
     MapView mapView;
-    private GoogleMap googleMap;
 
     List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
 
@@ -46,13 +45,11 @@ public class PointsOfInterestMapFragment extends Fragment {
         mapView.onResume();
         Log.v("MapFragment", "mapView.onResume");
 
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        googleMap = mapView.getMap();
+        MapsInitializer.initialize(getActivity().getApplicationContext());
+
+
+        GoogleMap googleMap = mapView.getMap();
 
         int size = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
 

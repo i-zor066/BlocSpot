@@ -1,7 +1,7 @@
 package com.izor066.android.blocspot.ui.fragment;
 
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 
 import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
-import com.izor066.android.blocspot.ui.MapPane;
 import com.izor066.android.blocspot.ui.adapter.ItemAdapter;
 
 /**
@@ -25,18 +24,7 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
 
 
     private RecyclerView recyclerView;
-    private ItemAdapter itemAdapter;
-
-   /* public interface OnPointOfInterestClickListener {
-        void onPointOfInterestClick(PointOfInterest pointOfInterest);
-    }
-
-    private final OnPointOfInterestClickListener listener;
-
-    public PointsOfInterestFragmentList(OnPointOfInterestClickListener listener) {
-        this.listener = listener;
-    }*/
-
+    private OnPointOfInterestClickListener listener;
 
 
     @Override
@@ -49,11 +37,21 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        itemAdapter = new ItemAdapter(this);
+        ItemAdapter itemAdapter = new ItemAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(itemAdapter);
         Log.v("POIFragmentList", "OnActivityCreated");
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof OnPointOfInterestClickListener) {
+            this.listener = (OnPointOfInterestClickListener) activity;
+        } else {
+            throw new IllegalArgumentException("Activity does not implement OnPointOfInterestClickListener");
+        }
     }
 
     @Override
@@ -82,10 +80,14 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
 
 
     @Override
-    public void OnPointOfInterestClick(PointOfInterest pointOfInterest) {
-       Intent intent = new Intent(getActivity(), MapPane.class);
-        intent.putExtra("poi", pointOfInterest);
-        startActivity(intent);
-        /* listener.onPointOfInterestClick(pointOfInterest);*/
+    public void onPointOfInterestClick(PointOfInterest pointOfInterest) {
+//       Intent intent = new Intent(getActivity(), MapPane.class);
+//        intent.putExtra("poi", pointOfInterest);
+//        startActivity(intent);
+        listener.onPointOfInterestClick(pointOfInterest);
+    }
+
+    public interface OnPointOfInterestClickListener {
+        void onPointOfInterestClick(PointOfInterest pointOfInterest);
     }
 }
