@@ -95,12 +95,6 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
         mGeofenceStore = new GeofenceStore(this, mGeofences);
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//    }
-
-
 
 
     @Override
