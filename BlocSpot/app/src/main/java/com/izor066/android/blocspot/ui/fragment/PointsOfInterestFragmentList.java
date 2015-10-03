@@ -80,7 +80,7 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
 
 
     @Override
-    public void OnPointOfInterestClick(PointOfInterest pointOfInterest) {
+    public void onPointOfInterestClick(PointOfInterest pointOfInterest) {
 //       Intent intent = new Intent(getActivity(), MapPane.class);
 //        intent.putExtra("poi", pointOfInterest);
 //        startActivity(intent);

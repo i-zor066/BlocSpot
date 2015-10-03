@@ -20,7 +20,7 @@ import com.izor066.android.blocspot.api.model.PointOfInterest;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterViewHolder> {
 
     public static interface OnPointOfInterestClickListener {
-        public void OnPointOfInterestClick(PointOfInterest pointOfInterest);
+        public void onPointOfInterestClick(PointOfInterest pointOfInterest);
     }
 
     private final OnPointOfInterestClickListener listener;
@@ -79,7 +79,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
 
         @Override
         public void onClick(View v) {
-            listener.OnPointOfInterestClick(pointOfInterest);
+            listener.onPointOfInterestClick(pointOfInterest);
            // Toast.makeText(itemView.getContext(), pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
         }
 
