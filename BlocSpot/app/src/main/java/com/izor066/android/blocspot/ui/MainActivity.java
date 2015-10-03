@@ -8,11 +8,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.location.Geofence;
+import com.izor066.android.blocspot.BlocSpotApplication;
+import com.izor066.android.blocspot.GeoFences.GeofenceStore;
 import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
 import com.izor066.android.blocspot.ui.adapter.TabAdapter;
 import com.izor066.android.blocspot.ui.fragment.PointsOfInterestFragmentList;
 import com.izor066.android.blocspot.ui.widget.tabs.SlidingTabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PointsOfInterestFragmentList.OnPointOfInterestClickListener {
 
@@ -23,6 +29,16 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     SlidingTabLayout tabs;
     CharSequence Titles[] = {"Points Of Interest", "Map"};
     int Numboftabs = 2;
+
+    // GeoFence Data
+
+    ArrayList<Geofence> mGeofences;
+    private static final int GEOFENCE_RADIUS = 150;
+//    private static final int LOITERING_DELAY = 45000;
+    private GeofenceStore mGeofenceStore;
+
+    List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +70,29 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
 
         tabs.setViewPager(pager);
 
+        // GeoFences
 
+        mGeofences = new ArrayList<Geofence>();
 
+        int size = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
+
+        for (int i = 0; i < size; i++) {
+            String title = pointsOfInterest.get(i).getTitle();
+            float lat = pointsOfInterest.get(i).getLatitude();
+            float lon = pointsOfInterest.get(i).getLongitude();
+
+            mGeofences.add(new Geofence.Builder()
+                    .setRequestId(title)
+                    .setCircularRegion(lat, lon, GEOFENCE_RADIUS)
+                    .setExpirationDuration(Geofence.NEVER_EXPIRE)
+//                    .setLoiteringDelay(LOITERING_DELAY)
+                    .setTransitionTypes(
+                            Geofence.GEOFENCE_TRANSITION_ENTER
+//                                    | Geofence.GEOFENCE_TRANSITION_DWELL
+                                    | Geofence.GEOFENCE_TRANSITION_EXIT).build());
+        }
+
+        mGeofenceStore = new GeofenceStore(this, mGeofences);
     }
 
 
@@ -76,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override
