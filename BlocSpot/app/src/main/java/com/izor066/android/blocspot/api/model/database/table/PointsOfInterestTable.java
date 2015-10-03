@@ -64,7 +64,7 @@ public class PointsOfInterestTable extends Table {
         return getFloat(cursor, COLUMN_LONGITUDE);
     }
 
-    public static Cursor getRowTest(SQLiteDatabase readonlyDatabase, long rowId) {
+    public static Cursor getRowWithId(SQLiteDatabase readonlyDatabase, long rowId) {
         return readonlyDatabase.query(true, NAME, null, COLUMN_ID + " = ?",
                 new String[]{String.valueOf(rowId)}, null, null, null, null);
     }
@@ -72,6 +72,10 @@ public class PointsOfInterestTable extends Table {
     public static Cursor getRowFromTitle(SQLiteDatabase readonlyDatabase, String title) {
         return readonlyDatabase.query(true, NAME, null, COLUMN_TITLE + " = ?",
                 new String[]{title}, null, null, null, null);
+    }
+
+    public static Cursor fetchAllPointsOfInterest(SQLiteDatabase readonlyDatabase) {
+        return readonlyDatabase.rawQuery("SELECT * FROM " + NAME + " ORDER BY ?", new String[]{COLUMN_TITLE});
     }
 
 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <CheckBox
+        android:id="@+id/cb_visited"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_point_of_interest_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Google HQ London (placeholder)"
+        android:textColor="@color/text_primary"
+        android:textSize="18sp"
+        android:layout_toRightOf="@id/cb_visited"/>
+
+    <TextView
+        android:id="@+id/tv_point_of_interest_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_point_of_interest_title"
+        android:layout_marginTop="8dp"
+        android:text="1-13 St Giles High St, London WC2H 8LG, United Kingdom"
+        android:textColor="@color/text_secondary"
+        android:textSize="16sp"
+        android:layout_toRightOf="@id/cb_visited"/>
+
+</RelativeLayout>
