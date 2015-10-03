@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
 
     ArrayList<Geofence> mGeofences;
     private static final int GEOFENCE_RADIUS = 150;
+//    private static final int LOITERING_DELAY = 45000;
     private GeofenceStore mGeofenceStore;
 
     List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
                     .setRequestId(title)
                     .setCircularRegion(lat, lon, GEOFENCE_RADIUS)
                     .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                    .setLoiteringDelay(30000)
+//                    .setLoiteringDelay(LOITERING_DELAY)
                     .setTransitionTypes(
                             Geofence.GEOFENCE_TRANSITION_ENTER
 //                                    | Geofence.GEOFENCE_TRANSITION_DWELL
@@ -94,15 +95,12 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
         mGeofenceStore = new GeofenceStore(this, mGeofences);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
+
 
 
     @Override
