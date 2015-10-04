@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
 
     ArrayList<Geofence> mGeofences;
     private static final int GEOFENCE_RADIUS = 150;
-//    private static final int LOITERING_DELAY = 45000;
+    //    private static final int LOITERING_DELAY = 45000;
     private GeofenceStore mGeofenceStore;
 
 
@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -154,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
             BlocSpotApplication.getSharedDataSource().insertCategoryToDatabase(category);
             Toast.makeText(this, getString(R.string.category_added) + " " + categoryNameInput, Toast.LENGTH_SHORT).show();
             Category categoryFromDB = BlocSpotApplication.getSharedDataSource().getCategoryFromDBWithCategoryName(categoryName);
-            Log.v ("Category inserted: ", " " + categoryFromDB.getCategoryName() + ", " + categoryFromDB.getColor());
+            Log.v("Category inserted: ", " " + categoryFromDB.getCategoryName() + ", " + categoryFromDB.getColor());
         }
 
     }

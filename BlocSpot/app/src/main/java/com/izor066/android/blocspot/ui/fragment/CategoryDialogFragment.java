@@ -20,9 +20,6 @@ public class CategoryDialogFragment extends DialogFragment implements TextView.O
 
     EditText categoryNameInput;
 
-//    public CategoryDialogFragment() {
-//
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
