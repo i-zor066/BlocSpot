@@ -70,8 +70,7 @@ public class DataSource {
                     .setLongitude(-0.1874554f)
                     .insert(writableDatabase);
             new CategoriesTable.Builder()
-                    .setCategoryName("Demo")
-                    .setColor(000000)
+                    .setCategoryName("")
                     .insert(writableDatabase);
 
 
