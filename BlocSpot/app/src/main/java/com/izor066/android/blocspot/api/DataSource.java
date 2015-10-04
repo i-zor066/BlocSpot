@@ -155,7 +155,7 @@ public class DataSource {
     // Retrieve Categories
 
     public Category getCategoryFromDBWithCategoryName(String categoryName) {
-        Cursor cursor = PointsOfInterestTable.getRowFromTitle(databaseOpenHelper.getReadableDatabase(), categoryName);
+        Cursor cursor = CategoriesTable.getRowFromCategoryName(databaseOpenHelper.getReadableDatabase(), categoryName);
         cursor.moveToFirst();
         Category category = CategoryFromCursor(cursor);
         cursor.close();
