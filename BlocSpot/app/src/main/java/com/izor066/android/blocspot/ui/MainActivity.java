@@ -13,6 +13,7 @@ import com.google.android.gms.location.Geofence;
 import com.izor066.android.blocspot.BlocSpotApplication;
 import com.izor066.android.blocspot.GeoFences.GeofenceStore;
 import com.izor066.android.blocspot.R;
+import com.izor066.android.blocspot.api.model.Category;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
 import com.izor066.android.blocspot.ui.adapter.TabAdapter;
 import com.izor066.android.blocspot.ui.fragment.CategoryDialogFragment;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     private static final int GEOFENCE_RADIUS = 150;
 //    private static final int LOITERING_DELAY = 45000;
     private GeofenceStore mGeofenceStore;
+
 
     List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
 
@@ -138,7 +140,19 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
 
     @Override
     public void onFinishEditDialog(String categoryNameInput) {
-        Toast.makeText(this, getString(R.string.category_added) + " " + categoryNameInput, Toast.LENGTH_SHORT).show();
+
+        String categoryName = categoryNameInput;
+        Boolean categoryExists = BlocSpotApplication.getSharedDataSource().categoryExists(categoryName);
+        int color = UIUtils.generateRandomColor(toolbar.getResources().getColor(android.R.color.white));
+        Category category = new Category(categoryName, color);
+        BlocSpotApplication.getSharedDataSource().insertCategoryToDatabase(category);
+
+        if (categoryExists) {
+            Toast.makeText(this, getString(R.string.category_exists), Toast.LENGTH_SHORT).show();
+        } else {
+            BlocSpotApplication.getSharedDataSource().insertCategoryToDatabase(category);
+           Toast.makeText(this, getString(R.string.category_added) + " " + categoryNameInput, Toast.LENGTH_SHORT).show();
+        }
 
     }
 }

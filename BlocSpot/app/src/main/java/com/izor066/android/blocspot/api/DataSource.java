@@ -28,7 +28,7 @@ public class DataSource {
     public DataSource(Context context) {
         pointsOfInterestTable = new PointsOfInterestTable();
         categoriesTable = new CategoriesTable();
-        databaseOpenHelper = new DatabaseOpenHelper(context, pointsOfInterestTable);
+        databaseOpenHelper = new DatabaseOpenHelper(context, pointsOfInterestTable, categoriesTable);
 
         if (BuildConfig.DEBUG) {
             context.deleteDatabase(DatabaseOpenHelper.NAME);
@@ -68,6 +68,10 @@ public class DataSource {
                     .setAddress("555 King's Rd, London SW6 2EB, United Kingdom")
                     .setLatitude(51.479068f)
                     .setLongitude(-0.1874554f)
+                    .insert(writableDatabase);
+            new CategoriesTable.Builder()
+                    .setCategoryName("Demo")
+                    .setColor(000000)
                     .insert(writableDatabase);
 
 
