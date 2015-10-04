@@ -130,7 +130,7 @@ public class DataSource {
         List<PointOfInterest> allPoints = new ArrayList<PointOfInterest>();
         if (cursor.moveToFirst()) {
             do {
-                allPoints.add(PointOfInterestFromCursor(cursor));
+                allPoints.add(pointOfInterestFromCursor(cursor));
             } while (cursor.moveToNext());
             cursor.close();
         }
@@ -139,7 +139,7 @@ public class DataSource {
 
     }
 
-    static PointOfInterest PointOfInterestFromCursor(Cursor cursor) {
+    private static PointOfInterest pointOfInterestFromCursor(Cursor cursor) {
         //cursor.moveToFirst();
         long rowId = Table.getRowId(cursor);
         String title = PointsOfInterestTable.getTitle(cursor);
@@ -156,7 +156,7 @@ public class DataSource {
     public Category getCategoryFromDBWithCategoryName(String categoryName) {
         Cursor cursor = CategoriesTable.getRowFromCategoryName(databaseOpenHelper.getReadableDatabase(), categoryName);
         cursor.moveToFirst();
-        Category category = CategoryFromCursor(cursor);
+        Category category = categoryFromCursor(cursor);
         cursor.close();
         return category;
     }
@@ -166,7 +166,7 @@ public class DataSource {
         List<Category> allCategories = new ArrayList<Category>();
         if (cursor.moveToFirst()) {
             do {
-                allCategories.add(CategoryFromCursor(cursor));
+                allCategories.add(categoryFromCursor(cursor));
             } while (cursor.moveToNext());
             cursor.close();
         }
@@ -175,7 +175,7 @@ public class DataSource {
     }
 
 
-    static Category CategoryFromCursor (Cursor cursor) {
+    private static Category categoryFromCursor(Cursor cursor) {
         String categoryName = CategoriesTable.getCategoryName(cursor);
         int color = CategoriesTable.getColor(cursor);
         Category category = new Category(categoryName, color);

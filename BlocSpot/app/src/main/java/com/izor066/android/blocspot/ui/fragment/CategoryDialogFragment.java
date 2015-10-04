@@ -20,9 +20,9 @@ public class CategoryDialogFragment extends DialogFragment implements TextView.O
 
     EditText categoryNameInput;
 
-    public CategoryDialogFragment() {
-
-    }
+//    public CategoryDialogFragment() {
+//
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,15 +39,15 @@ public class CategoryDialogFragment extends DialogFragment implements TextView.O
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
-            CategoryDialogListener activity = (CategoryDialogListener) getActivity();
-            activity.onFinishEditDialog(categoryNameInput.getText().toString());
-            this.dismiss();
+            CategoryDialogListener categoryDialogListener = (CategoryDialogListener) getActivity();
+            categoryDialogListener.onCategoryAdded(categoryNameInput.getText().toString());
+            dismiss();
             return true;
         }
         return false;
     }
 
     public interface CategoryDialogListener {
-        void onFinishEditDialog(String categoryNameInput);
+        void onCategoryAdded(String categoryNameInput);
     }
 }

@@ -5,7 +5,7 @@
 
     <EditText
         android:id="@+id/et_category_name"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/new_category_name_hint"
         android:inputType="textCapWords"

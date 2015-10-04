@@ -2,6 +2,7 @@ package com.izor066.android.blocspot.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -133,20 +134,19 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     }
 
     private void showEditDialog() {
-        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         CategoryDialogFragment categoryDialogFragment = new CategoryDialogFragment();
-        categoryDialogFragment.show(fm, "insert_category_name");
+        categoryDialogFragment.show(fragmentManager, "insert_category_name");
     }
 
 
     @Override
-    public void onFinishEditDialog(String categoryNameInput) {
+    public void onCategoryAdded(String categoryNameInput) {
 
         String categoryName = categoryNameInput;
         Boolean categoryExists = BlocSpotApplication.getSharedDataSource().categoryExists(categoryName);
         int color = UIUtils.generateRandomColor(toolbar.getResources().getColor(android.R.color.white));
         Category category = new Category(categoryName, color);
-        BlocSpotApplication.getSharedDataSource().insertCategoryToDatabase(category);
 
         if (categoryExists) {
             Toast.makeText(this, getString(R.string.category_exists), Toast.LENGTH_SHORT).show();
