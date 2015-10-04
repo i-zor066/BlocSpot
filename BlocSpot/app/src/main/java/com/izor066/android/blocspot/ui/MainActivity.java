@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -151,7 +152,9 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
             Toast.makeText(this, getString(R.string.category_exists), Toast.LENGTH_SHORT).show();
         } else {
             BlocSpotApplication.getSharedDataSource().insertCategoryToDatabase(category);
-           Toast.makeText(this, getString(R.string.category_added) + " " + categoryNameInput, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.category_added) + " " + categoryNameInput, Toast.LENGTH_SHORT).show();
+            Category categoryFromDB = BlocSpotApplication.getSharedDataSource().getCategoryFromDBWithCategoryName(categoryName);
+            Log.v ("Category inserted: ", " " + categoryFromDB.getCategoryName() + ", " + categoryFromDB.getColor());
         }
 
     }
