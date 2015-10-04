@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.location.Geofence;
 import com.izor066.android.blocspot.BlocSpotApplication;
@@ -14,13 +15,14 @@ import com.izor066.android.blocspot.GeoFences.GeofenceStore;
 import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
 import com.izor066.android.blocspot.ui.adapter.TabAdapter;
+import com.izor066.android.blocspot.ui.fragment.CategoryDialogFragment;
 import com.izor066.android.blocspot.ui.fragment.PointsOfInterestFragmentList;
 import com.izor066.android.blocspot.ui.widget.tabs.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements PointsOfInterestFragmentList.OnPointOfInterestClickListener {
+public class MainActivity extends AppCompatActivity implements PointsOfInterestFragmentList.OnPointOfInterestClickListener, CategoryDialogFragment.CategoryDialogListener {
 
 
     Toolbar toolbar;
@@ -111,6 +113,11 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
             return true;
         }
 
+        if (id == R.id.action_category) {
+            showEditDialog();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -122,5 +129,16 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
         startActivity(intent);
     }
 
+    private void showEditDialog() {
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        CategoryDialogFragment categoryDialogFragment = new CategoryDialogFragment();
+        categoryDialogFragment.show(fm, "insert_category_name");
+    }
 
+
+    @Override
+    public void onFinishEditDialog(String categoryNameInput) {
+        Toast.makeText(this, getString(R.string.category_added) + " " + categoryNameInput, Toast.LENGTH_SHORT).show();
+
+    }
 }
