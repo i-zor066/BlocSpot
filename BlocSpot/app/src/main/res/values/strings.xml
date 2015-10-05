@@ -23,4 +23,8 @@
     <string name="geofence_dwell">Geofence Dwell</string>
     <string name="geofence_exit">Leaving Point of Interest</string>
 
+    <string name="new_category_name_hint">New Category Name</string>
+    <string name="category_added">New Category Added:</string>
+    <string name="category_exists">Category Exists. Please pick another name.</string>
+
 </resources>

@@ -5,8 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.izor066.android.blocspot.BuildConfig;
+import com.izor066.android.blocspot.api.model.Category;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
 import com.izor066.android.blocspot.api.model.database.DatabaseOpenHelper;
+import com.izor066.android.blocspot.api.model.database.table.CategoriesTable;
 import com.izor066.android.blocspot.api.model.database.table.PointsOfInterestTable;
 import com.izor066.android.blocspot.api.model.database.table.Table;
 
@@ -20,16 +22,18 @@ public class DataSource {
 
     private DatabaseOpenHelper databaseOpenHelper;
     private PointsOfInterestTable pointsOfInterestTable;
+    private CategoriesTable categoriesTable;
 
 
     public DataSource(Context context) {
         pointsOfInterestTable = new PointsOfInterestTable();
-        databaseOpenHelper = new DatabaseOpenHelper(context, pointsOfInterestTable);
+        categoriesTable = new CategoriesTable();
+        databaseOpenHelper = new DatabaseOpenHelper(context, pointsOfInterestTable, categoriesTable);
 
         if (BuildConfig.DEBUG) {
             context.deleteDatabase(DatabaseOpenHelper.NAME);
             SQLiteDatabase writableDatabase = databaseOpenHelper.getWritableDatabase();
-         new PointsOfInterestTable.Builder()
+            new PointsOfInterestTable.Builder()
                     .setTitle("Google")
                     .setAddress("1-13 St Giles High St, London WC2H 8LG, United Kingdom")
                     .setLatitude(51.5160563f)
@@ -65,10 +69,15 @@ public class DataSource {
                     .setLatitude(51.479068f)
                     .setLongitude(-0.1874554f)
                     .insert(writableDatabase);
+            new CategoriesTable.Builder()
+                    .setCategoryName("")
+                    .insert(writableDatabase);
 
 
         }
     }
+
+    // Insert
 
     public void insertPointToDatabase(PointOfInterest pointOfInterest) {
         SQLiteDatabase writableDatabase = databaseOpenHelper.getWritableDatabase();
@@ -79,6 +88,18 @@ public class DataSource {
                 .setLongitude(pointOfInterest.getLongitude())
                 .insert(writableDatabase);
     }
+
+    public void insertCategoryToDatabase(Category category) {
+        SQLiteDatabase writableDatabase = databaseOpenHelper.getWritableDatabase();
+        new CategoriesTable.Builder()
+                .setCategoryName(category.getCategoryName())
+                .setColor(category.getColor())
+                .insert(writableDatabase);
+    }
+
+
+    // Retrieve PointsOfInterest
+
 
     public PointOfInterest getPOIfromDBwithTitle(String title) {
         Cursor cursor = PointsOfInterestTable.getRowFromTitle(databaseOpenHelper.getReadableDatabase(), title);
@@ -109,7 +130,7 @@ public class DataSource {
         List<PointOfInterest> allPoints = new ArrayList<PointOfInterest>();
         if (cursor.moveToFirst()) {
             do {
-                allPoints.add(PointOfInterestFromCursor(cursor));
+                allPoints.add(pointOfInterestFromCursor(cursor));
             } while (cursor.moveToNext());
             cursor.close();
         }
@@ -118,7 +139,7 @@ public class DataSource {
 
     }
 
-    static PointOfInterest PointOfInterestFromCursor(Cursor cursor) {
+    private static PointOfInterest pointOfInterestFromCursor(Cursor cursor) {
         //cursor.moveToFirst();
         long rowId = Table.getRowId(cursor);
         String title = PointsOfInterestTable.getTitle(cursor);
@@ -130,6 +151,47 @@ public class DataSource {
         return pointOfInterest;
     }
 
+    // Retrieve Categories
+
+    public Category getCategoryFromDBWithCategoryName(String categoryName) {
+        Cursor cursor = CategoriesTable.getRowFromCategoryName(databaseOpenHelper.getReadableDatabase(), categoryName);
+        cursor.moveToFirst();
+        Category category = categoryFromCursor(cursor);
+        cursor.close();
+        return category;
+    }
+
+    public List<Category> getAllCategories() {
+        Cursor cursor = CategoriesTable.getAllCategories(databaseOpenHelper.getReadableDatabase());
+        List<Category> allCategories = new ArrayList<Category>();
+        if (cursor.moveToFirst()) {
+            do {
+                allCategories.add(categoryFromCursor(cursor));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return allCategories;
+    }
+
+
+    private static Category categoryFromCursor(Cursor cursor) {
+        String categoryName = CategoriesTable.getCategoryName(cursor);
+        int color = CategoriesTable.getColor(cursor);
+        Category category = new Category(categoryName, color);
+        return category;
+    }
+
+    public boolean categoryExists(String categoryName) {
+        Cursor cursor = CategoriesTable.getRowFromCategoryName(databaseOpenHelper.getReadableDatabase(), categoryName);
+
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+    }
 
 
 }
