@@ -132,6 +132,11 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
         startActivity(intent);
     }
 
+    @Override
+    public void onPointOfInterestLongClick(PointOfInterest pointOfInterest) {
+        Toast.makeText(this, pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
+    }
+
     private void showEditDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         CategoryDialogFragment categoryDialogFragment = new CategoryDialogFragment();

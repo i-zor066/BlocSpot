@@ -21,6 +21,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
 
     public static interface OnPointOfInterestClickListener {
         public void onPointOfInterestClick(PointOfInterest pointOfInterest);
+        public void onPointOfInterestLongClick(PointOfInterest pointOfInterest);
     }
 
     private final OnPointOfInterestClickListener listener;
@@ -49,7 +50,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
 
 
 
-    class ItemAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+    class ItemAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, View.OnLongClickListener {
 
         TextView title;
         TextView address;
@@ -64,6 +65,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
             visited = (CheckBox) itemView.findViewById(R.id.cb_visited);
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
             visited.setOnCheckedChangeListener(this);
         }
 
@@ -88,6 +90,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             Log.v("Visited", "Checked changed to: " + isChecked);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            listener.onPointOfInterestLongClick(pointOfInterest);
+            return true;
         }
     }
 

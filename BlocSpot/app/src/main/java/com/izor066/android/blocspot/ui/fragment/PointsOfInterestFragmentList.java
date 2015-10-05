@@ -87,7 +87,14 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
         listener.onPointOfInterestClick(pointOfInterest);
     }
 
+    @Override
+    public void onPointOfInterestLongClick(PointOfInterest pointOfInterest) {
+//        Toast.makeText(getActivity(), pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
+        listener.onPointOfInterestLongClick(pointOfInterest);
+    }
+
     public interface OnPointOfInterestClickListener {
         void onPointOfInterestClick(PointOfInterest pointOfInterest);
+        void onPointOfInterestLongClick(PointOfInterest pointOfInterest);
     }
 }
