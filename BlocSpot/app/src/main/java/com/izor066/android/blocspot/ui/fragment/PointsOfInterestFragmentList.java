@@ -25,6 +25,7 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
 
     private RecyclerView recyclerView;
     private OnPointOfInterestClickListener listener;
+    private ItemAdapter itemAdapter;
 
 
     @Override
@@ -37,7 +38,7 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ItemAdapter itemAdapter = new ItemAdapter(this);
+        itemAdapter = new ItemAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(itemAdapter);
@@ -90,11 +91,12 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
     @Override
     public void onPointOfInterestLongClick(PointOfInterest pointOfInterest) {
 //        Toast.makeText(getActivity(), pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
-        listener.onPointOfInterestLongClick(pointOfInterest);
+        listener.onPointOfInterestLongClick(pointOfInterest, itemAdapter);
+
     }
 
     public interface OnPointOfInterestClickListener {
         void onPointOfInterestClick(PointOfInterest pointOfInterest);
-        void onPointOfInterestLongClick(PointOfInterest pointOfInterest);
+        void onPointOfInterestLongClick(PointOfInterest pointOfInterest, ItemAdapter itemAdapter);
     }
 }

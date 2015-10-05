@@ -41,6 +41,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
         DataSource sharedDataSource = BlocSpotApplication.getSharedDataSource();
         itemAdapterViewHolder.update(sharedDataSource.getAllPointsOfInterest().get(i), listener);
 
+
     }
 
     @Override
@@ -55,11 +56,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
         TextView title;
         TextView address;
         CheckBox visited;
+        View wrapper;
         PointOfInterest pointOfInterest;
         OnPointOfInterestClickListener listener;
 
         public ItemAdapterViewHolder(View itemView) {
             super(itemView);
+            wrapper = itemView.findViewById(R.id.rl_poi_wrapper);
             title = (TextView) itemView.findViewById(R.id.tv_point_of_interest_title);
             address = (TextView) itemView.findViewById(R.id.tv_point_of_interest_address);
             visited = (CheckBox) itemView.findViewById(R.id.cb_visited);
@@ -74,6 +77,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
             title.setText(pointOfInterest.getTitle());
             address.setText(pointOfInterest.getAddress());
             this.listener = listener;
+
+            String categoryName = BlocSpotApplication.getSharedDataSource().getPOIfromDBwithTitle(pointOfInterest.getTitle()).getPoiCategory();
+            int color = BlocSpotApplication.getSharedDataSource().getCategoryFromDBWithCategoryName(categoryName).getColor();
+
+            wrapper.setBackgroundColor(color);
         }
 
         // OnClickListener
@@ -97,6 +105,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
             listener.onPointOfInterestLongClick(pointOfInterest);
             return true;
         }
+
+
     }
 
 

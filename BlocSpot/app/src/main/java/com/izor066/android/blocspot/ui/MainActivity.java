@@ -17,6 +17,7 @@ import com.izor066.android.blocspot.GeoFences.GeofenceStore;
 import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.api.model.Category;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
+import com.izor066.android.blocspot.ui.adapter.ItemAdapter;
 import com.izor066.android.blocspot.ui.adapter.TabAdapter;
 import com.izor066.android.blocspot.ui.fragment.CategoryDialogFragment;
 import com.izor066.android.blocspot.ui.fragment.PointsOfInterestFragmentList;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     CharSequence Titles[] = {"Points Of Interest", "Map"};
     int Numboftabs = 2;
 
+
     // GeoFence Data
 
     ArrayList<Geofence> mGeofences;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     private GeofenceStore mGeofenceStore;
     private String mCategoryName;
     private PointOfInterest mPointOfInterest;
+    ItemAdapter mItemAdapter;
 
 
     List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
@@ -144,12 +147,11 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     }
 
     private void showCategorySpinner(PointOfInterest pointOfInterest) {
-        Bundle args = new Bundle(); // ToDO: Restoring the spinner position
-        args.putString("title", pointOfInterest.getTitle()); // ToDO: Restoring the spinner position
-        Log.e("Show categories", "Passed in cat: " + pointOfInterest.getPoiCategory());
+        Bundle args = new Bundle();
+        args.putString("title", pointOfInterest.getTitle());
         FragmentManager fragmentManager = getSupportFragmentManager();
         SelectCategoryDialogFragment selectCategoryDialogFragment = new SelectCategoryDialogFragment();
-        selectCategoryDialogFragment.setArguments(args); // ToDO: Restoring the spinner position
+        selectCategoryDialogFragment.setArguments(args);
         selectCategoryDialogFragment.show(fragmentManager, pointOfInterest.getTitle());
     }
 
@@ -176,10 +178,11 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     // Category assignment
 
     @Override
-    public void onPointOfInterestLongClick(PointOfInterest pointOfInterest) {
+    public void onPointOfInterestLongClick(PointOfInterest pointOfInterest, ItemAdapter itemAdapter) {
 //        Toast.makeText(this, pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
         showCategorySpinner(pointOfInterest);
         mPointOfInterest = pointOfInterest;
+        mItemAdapter = itemAdapter;
     }
 
     @Override
@@ -187,5 +190,10 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
         mCategoryName = selectedCategoryName;
         BlocSpotApplication.getSharedDataSource().updatePointOfInterestCategory(mPointOfInterest, mCategoryName);
         Toast.makeText(this, "Category for " + mPointOfInterest.getTitle() + " changed to " + mCategoryName + ".", Toast.LENGTH_SHORT).show();
+        mItemAdapter.notifyDataSetChanged();
+
+
     }
+
+
 }

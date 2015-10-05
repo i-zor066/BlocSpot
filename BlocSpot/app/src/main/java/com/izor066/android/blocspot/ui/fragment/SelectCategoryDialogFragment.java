@@ -2,7 +2,6 @@ package com.izor066.android.blocspot.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,13 +32,11 @@ public class SelectCategoryDialogFragment extends DialogFragment implements Adap
         View view = inflater.inflate(R.layout.category_select_dialog_fragment, container);
         selectCategorySpinner = (Spinner) view.findViewById(R.id.sp_select_category);
         String titleFromBundle = getArguments().getString("title");
-        Log.e("Category", "onCreate cat: " + titleFromBundle);
         List<String> categories = BlocSpotApplication.getSharedDataSource().getAllCategoryNames();
         PointOfInterest pointOfInterest = BlocSpotApplication.getSharedDataSource().getPOIfromDBwithTitle(titleFromBundle);
         setupSpinner(categories);
         selectCategorySpinner.setOnItemSelectedListener(this);
         selectCategorySpinner.setSelection(categories.indexOf(pointOfInterest.getPoiCategory()));
-        Log.v("Category: ", "selection cat index: " + categories.indexOf(titleFromBundle));
 
         return view;
     }
