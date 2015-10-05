@@ -15,6 +15,7 @@ public class PointsOfInterestTable extends Table {
     private static final String COLUMN_ADDRESS = "address";
     private static final String COLUMN_LATITUDE = "latitude";
     private static final String COLUMN_LONGITUDE = "longitude";
+    private static final String COLUMN_POI_CATEGORY = "poi_category";
 
     public static class Builder implements Table.Builder {
 
@@ -40,6 +41,15 @@ public class PointsOfInterestTable extends Table {
             return this;
         }
 
+        public Builder setCategory(String poiCategory) {
+            values.put(COLUMN_POI_CATEGORY, poiCategory);
+            return this;
+        }
+
+        public void updateForTitle(SQLiteDatabase writableDB, String title) {
+            writableDB.update(PointsOfInterestTable.NAME, values, COLUMN_TITLE + " = ?", new String[] { title});
+        }
+
         @Override
         public long insert(SQLiteDatabase writableDB) {
             return writableDB.insert(PointsOfInterestTable.NAME, null, values);
@@ -62,6 +72,10 @@ public class PointsOfInterestTable extends Table {
 
     public static float getLongitude(Cursor cursor) {
         return getFloat(cursor, COLUMN_LONGITUDE);
+    }
+
+    public static String getPoiCategory(Cursor cursor) {
+        return getString(cursor, COLUMN_POI_CATEGORY);
     }
 
     public static Cursor getRowWithId(SQLiteDatabase readonlyDatabase, long rowId) {
@@ -92,6 +106,7 @@ public class PointsOfInterestTable extends Table {
                 + COLUMN_TITLE + " TEXT,"
                 + COLUMN_ADDRESS + " TEXT,"
                 + COLUMN_LATITUDE + " REAL,"
-                + COLUMN_LONGITUDE + " REAL)";
+                + COLUMN_LONGITUDE + " REAL,"
+                + COLUMN_POI_CATEGORY + " TEXT DEFAULT 'Unsorted')";
     }
 }
