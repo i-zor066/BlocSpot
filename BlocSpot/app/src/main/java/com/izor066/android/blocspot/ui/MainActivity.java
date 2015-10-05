@@ -143,10 +143,14 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
         categoryDialogFragment.show(fragmentManager, "insert_category_name");
     }
 
-    private void showCategorySpinner() {
+    private void showCategorySpinner(PointOfInterest pointOfInterest) {
+        Bundle args = new Bundle(); // ToDO: Restoring the spinner position
+        args.putString("title", pointOfInterest.getTitle()); // ToDO: Restoring the spinner position
+        Log.e("Show categories", "Passed in cat: " + pointOfInterest.getPoiCategory());
         FragmentManager fragmentManager = getSupportFragmentManager();
         SelectCategoryDialogFragment selectCategoryDialogFragment = new SelectCategoryDialogFragment();
-        selectCategoryDialogFragment.show(fragmentManager, "insert_category_name");
+        selectCategoryDialogFragment.setArguments(args); // ToDO: Restoring the spinner position
+        selectCategoryDialogFragment.show(fragmentManager, pointOfInterest.getTitle());
     }
 
 
@@ -174,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     @Override
     public void onPointOfInterestLongClick(PointOfInterest pointOfInterest) {
 //        Toast.makeText(this, pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
-        showCategorySpinner();
+        showCategorySpinner(pointOfInterest);
         mPointOfInterest = pointOfInterest;
     }
 
