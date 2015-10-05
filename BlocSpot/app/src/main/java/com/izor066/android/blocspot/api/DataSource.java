@@ -97,10 +97,9 @@ public class DataSource {
                 .insert(writableDatabase);
     }
 
-    public void updatePointOfInterestCategory(PointOfInterest pointOfInterest, Category category) {
+    public void updatePointOfInterestCategory(PointOfInterest pointOfInterest, String categoryName) {
         SQLiteDatabase writableDatabase = databaseOpenHelper.getWritableDatabase();
         String pointOfInterestTitle = pointOfInterest.getTitle();
-        String categoryName = category.getCategoryName();
         new PointsOfInterestTable.Builder()
                 .setCategory(categoryName)
                 .updateForTitle(writableDatabase, pointOfInterestTitle);
@@ -184,6 +183,19 @@ public class DataSource {
         }
 
         return allCategories;
+    }
+
+    public List<String> getAllCategoryNames() {
+        Cursor cursor = CategoriesTable.getAllCategories(databaseOpenHelper.getReadableDatabase());
+        List<String> allCategoryNames = new ArrayList<String>();
+        if (cursor.moveToFirst()) {
+            do {
+                allCategoryNames.add(categoryFromCursor(cursor).getCategoryName());
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return allCategoryNames;
     }
 
 

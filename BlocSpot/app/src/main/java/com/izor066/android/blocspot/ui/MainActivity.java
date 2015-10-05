@@ -20,12 +20,13 @@ import com.izor066.android.blocspot.api.model.PointOfInterest;
 import com.izor066.android.blocspot.ui.adapter.TabAdapter;
 import com.izor066.android.blocspot.ui.fragment.CategoryDialogFragment;
 import com.izor066.android.blocspot.ui.fragment.PointsOfInterestFragmentList;
+import com.izor066.android.blocspot.ui.fragment.SelectCategoryDialogFragment;
 import com.izor066.android.blocspot.ui.widget.tabs.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements PointsOfInterestFragmentList.OnPointOfInterestClickListener, CategoryDialogFragment.CategoryDialogListener {
+public class MainActivity extends AppCompatActivity implements PointsOfInterestFragmentList.OnPointOfInterestClickListener, CategoryDialogFragment.CategoryDialogListener, SelectCategoryDialogFragment.CategorySelectedListener {
 
 
     Toolbar toolbar;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     private static final int GEOFENCE_RADIUS = 150;
     //    private static final int LOITERING_DELAY = 45000;
     private GeofenceStore mGeofenceStore;
+    private String mCategoryName;
+    private PointOfInterest mPointOfInterest;
 
 
     List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
@@ -132,15 +135,18 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
         startActivity(intent);
     }
 
-    @Override
-    public void onPointOfInterestLongClick(PointOfInterest pointOfInterest) {
-        Toast.makeText(this, pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
-    }
+
 
     private void showEditDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         CategoryDialogFragment categoryDialogFragment = new CategoryDialogFragment();
         categoryDialogFragment.show(fragmentManager, "insert_category_name");
+    }
+
+    private void showCategorySpinner() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        SelectCategoryDialogFragment selectCategoryDialogFragment = new SelectCategoryDialogFragment();
+        selectCategoryDialogFragment.show(fragmentManager, "insert_category_name");
     }
 
 
@@ -161,5 +167,21 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
             Log.v("Category inserted: ", " " + categoryFromDB.getCategoryName() + ", " + categoryFromDB.getColor());
         }
 
+    }
+
+    // Category assignment
+
+    @Override
+    public void onPointOfInterestLongClick(PointOfInterest pointOfInterest) {
+//        Toast.makeText(this, pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
+        showCategorySpinner();
+        mPointOfInterest = pointOfInterest;
+    }
+
+    @Override
+    public void onCategorySelected(String selectedCategoryName) {
+        mCategoryName = selectedCategoryName;
+        BlocSpotApplication.getSharedDataSource().updatePointOfInterestCategory(mPointOfInterest, mCategoryName);
+        Toast.makeText(this, "Category for " + mPointOfInterest.getTitle() + " changed to " + mCategoryName + ".", Toast.LENGTH_SHORT).show();
     }
 }
