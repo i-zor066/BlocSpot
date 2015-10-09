@@ -27,7 +27,9 @@ import com.izor066.android.blocspot.ui.widget.tabs.SlidingTabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements PointsOfInterestFragmentList.OnPointOfInterestClickListener, CategoryDialogFragment.CategoryDialogListener, SelectCategoryDialogFragment.CategorySelectedListener {
+import static com.izor066.android.blocspot.ui.fragment.CategoryDialogFragment.*;
+
+public class MainActivity extends AppCompatActivity implements PointsOfInterestFragmentList.OnPointOfInterestClickListener, CategoryDialogListener, SelectCategoryDialogFragment.CategorySelectedListener {
 
 
     Toolbar toolbar;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     int Numboftabs = 2;
 
 
+
     // GeoFence Data
 
     ArrayList<Geofence> mGeofences;
@@ -45,8 +48,11 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     //    private static final int LOITERING_DELAY = 45000;
     private GeofenceStore mGeofenceStore;
     private String mCategoryName;
+
+
     private PointOfInterest mPointOfInterest;
     ItemAdapter mItemAdapter;
+    private String currentCategory = ALL_CATEGORIES;
 
 
     List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
@@ -123,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
         }
 
         if (id == R.id.action_category) {
-            showEditDialog();
+            showEditDialog(currentCategory);
             return true;
         }
 
@@ -140,9 +146,12 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
 
 
 
-    private void showEditDialog() {
+    private void showEditDialog(String currentCategoryView) {
+        Bundle args = new Bundle();
+        args.putString("currentCategoryView", currentCategoryView);
         FragmentManager fragmentManager = getSupportFragmentManager();
         CategoryDialogFragment categoryDialogFragment = new CategoryDialogFragment();
+        categoryDialogFragment.setArguments(args);
         categoryDialogFragment.show(fragmentManager, "insert_category_name");
     }
 
@@ -173,6 +182,12 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
             Log.v("Category inserted: ", " " + categoryFromDB.getCategoryName() + ", " + categoryFromDB.getColor());
         }
 
+    }
+
+    @Override
+    public void onCategoryViewSelected(String categoryViewSelected) {
+        Toast.makeText(this, "Category View for " + categoryViewSelected + " selected.", Toast.LENGTH_SHORT).show();
+        currentCategory = categoryViewSelected;
     }
 
     // Category assignment
