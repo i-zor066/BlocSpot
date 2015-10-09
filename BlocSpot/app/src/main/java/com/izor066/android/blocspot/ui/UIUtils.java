@@ -1,6 +1,10 @@
 package com.izor066.android.blocspot.ui;
 
+import android.graphics.Color;
+
 import java.util.Random;
+
+import static android.graphics.Color.*;
 
 /**
  * Created by igor on 4/10/15.
@@ -21,5 +25,15 @@ public class UIUtils {
         green = (green + baseGreen) / 2;
         blue = (blue + baseBlue) / 2;
         return 0xFF000000 | (red << 16) | (green << 8) | blue;
+    }
+
+    public static float getHueFromRGB(int color) {
+        int r = red(color);
+        int g = green(color);
+        int b = blue(color);
+        float[] hsv = new float[3];
+        Color.RGBToHSV(r,g,b,hsv);
+        float hue = hsv[0];
+        return hue;
     }
 }
