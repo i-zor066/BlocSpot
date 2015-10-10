@@ -1,6 +1,5 @@
 package com.izor066.android.blocspot.ui.adapter;
 
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -16,7 +15,7 @@ public class TabAdapter extends FragmentStatePagerAdapter {
 
     CharSequence mTitles[];
     int mNumbOfTabs;
-
+    private PointsOfInterestFragmentList pointsOfInterestFragmentList;
 
 
     public TabAdapter(FragmentManager fm, CharSequence Titles[], int NumbOfTabsumb) {
@@ -32,7 +31,7 @@ public class TabAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
 
         if (position == 0) {
-            PointsOfInterestFragmentList pointsOfInterestFragmentList = new PointsOfInterestFragmentList();
+            pointsOfInterestFragmentList = new PointsOfInterestFragmentList();
             return pointsOfInterestFragmentList;
         } else {
             PointsOfInterestMapFragment pointsOfInterestMapFragment = new PointsOfInterestMapFragment();
@@ -41,6 +40,9 @@ public class TabAdapter extends FragmentStatePagerAdapter {
 
     }
 
+    public void updateCategory(String category) {
+        pointsOfInterestFragmentList.updateCategory(category);
+    }
 
 
     @Override

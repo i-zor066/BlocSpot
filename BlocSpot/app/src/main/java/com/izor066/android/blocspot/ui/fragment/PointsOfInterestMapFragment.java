@@ -33,6 +33,7 @@ public class PointsOfInterestMapFragment extends Fragment {
     MapView mapView;
 
     List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
+    private GoogleMap googleMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,11 +47,9 @@ public class PointsOfInterestMapFragment extends Fragment {
         mapView.onResume();
         Log.v("MapFragment", "mapView.onResume");
 
-
         MapsInitializer.initialize(getActivity().getApplicationContext());
 
-
-        GoogleMap googleMap = mapView.getMap();
+        GoogleMap googleMap1 = mapView.getMap();
 
         int size = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
 
@@ -73,12 +72,12 @@ public class PointsOfInterestMapFragment extends Fragment {
                     .defaultMarker(colorH));
 
 
-            googleMap.addMarker(marker);
+            googleMap1.addMarker(marker);
 
         }
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(lat, lon)).zoom(12).build();
-        googleMap.animateCamera(CameraUpdateFactory
+        googleMap1.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
 
 
@@ -91,6 +90,7 @@ public class PointsOfInterestMapFragment extends Fragment {
         super.onResume();
         mapView.onResume();
         Log.v("MapFragment", "onResume");
+
     }
 
     @Override
@@ -98,6 +98,7 @@ public class PointsOfInterestMapFragment extends Fragment {
         super.onPause();
         mapView.onPause();
         Log.v("MapFragment", "onPause");
+
     }
 
     @Override
@@ -112,5 +113,6 @@ public class PointsOfInterestMapFragment extends Fragment {
         super.onLowMemory();
         mapView.onLowMemory();
     }
+
 
 }

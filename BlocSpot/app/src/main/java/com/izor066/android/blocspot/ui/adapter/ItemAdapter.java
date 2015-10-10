@@ -13,11 +13,15 @@ import com.izor066.android.blocspot.BlocSpotApplication;
 import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.api.DataSource;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
+import com.izor066.android.blocspot.ui.fragment.CategoryDialogFragment;
 
 /**
  * Created by igor on 28/9/15.
  */
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterViewHolder>  {
+
+    private String currentCategoryView = CategoryDialogFragment.ALL_CATEGORIES;
+
 
     public static interface OnPointOfInterestClickListener {
         public void onPointOfInterestClick(PointOfInterest pointOfInterest);
@@ -39,19 +43,30 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
     @Override
     public void onBindViewHolder(ItemAdapter.ItemAdapterViewHolder itemAdapterViewHolder, int i) {
         DataSource sharedDataSource = BlocSpotApplication.getSharedDataSource();
-        itemAdapterViewHolder.update(sharedDataSource.getAllPointsOfInterest().get(i), listener);
+        if (currentCategoryView == CategoryDialogFragment.ALL_CATEGORIES) {
+            itemAdapterViewHolder.update(sharedDataSource.getAllPointsOfInterest().get(i), listener);
+        } else {
+            itemAdapterViewHolder.update(sharedDataSource.getPointsOfInterestForCategory(currentCategoryView).get(i), listener);
+        }
+    }
 
-
+    public void updateCategory(String category) {
+        this.currentCategoryView = category;
     }
 
     @Override
     public int getItemCount() {
-        return BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
+        if (currentCategoryView == CategoryDialogFragment.ALL_CATEGORIES) {
+            return BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
+        } else {
+            return BlocSpotApplication.getSharedDataSource().getPointsOfInterestForCategory(currentCategoryView).size();
+        }
+
     }
 
 
 
-    class ItemAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, View.OnLongClickListener {
+    class ItemAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, View.OnLongClickListener, CategoryDialogFragment.CategoryDialogListener {
 
         TextView title;
         TextView address;
@@ -107,6 +122,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
         }
 
 
+        @Override
+        public void onCategoryAdded(String categoryNameInput) {
+
+        }
+
+        @Override
+        public void onCategoryViewSelected(String categoryViewSelected) {
+            currentCategoryView = categoryViewSelected;
+            Log.v("ItemAdapter", "categoryViewSelected");
+
+        }
     }
 
 

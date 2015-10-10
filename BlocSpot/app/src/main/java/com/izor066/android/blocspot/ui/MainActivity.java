@@ -27,7 +27,8 @@ import com.izor066.android.blocspot.ui.widget.tabs.SlidingTabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.izor066.android.blocspot.ui.fragment.CategoryDialogFragment.*;
+import static com.izor066.android.blocspot.ui.fragment.CategoryDialogFragment.ALL_CATEGORIES;
+import static com.izor066.android.blocspot.ui.fragment.CategoryDialogFragment.CategoryDialogListener;
 
 public class MainActivity extends AppCompatActivity implements PointsOfInterestFragmentList.OnPointOfInterestClickListener, CategoryDialogListener, SelectCategoryDialogFragment.CategorySelectedListener {
 
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
 
     private PointOfInterest mPointOfInterest;
     ItemAdapter mItemAdapter;
-    private String currentCategory = ALL_CATEGORIES;
+    public String currentCategory = ALL_CATEGORIES;
 
 
     List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
@@ -112,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
 
         mGeofenceStore = new GeofenceStore(this, mGeofences);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -188,6 +188,8 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     public void onCategoryViewSelected(String categoryViewSelected) {
         Toast.makeText(this, "Category View for " + categoryViewSelected + " selected.", Toast.LENGTH_SHORT).show();
         currentCategory = categoryViewSelected;
+        Log.v("MainActivity", currentCategory);
+       adapter.updateCategory(currentCategory);
     }
 
     // Category assignment
@@ -206,9 +208,8 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
         BlocSpotApplication.getSharedDataSource().updatePointOfInterestCategory(mPointOfInterest, mCategoryName);
         Toast.makeText(this, "Category for " + mPointOfInterest.getTitle() + " changed to " + mCategoryName + ".", Toast.LENGTH_SHORT).show();
         mItemAdapter.notifyDataSetChanged();
-
-
     }
+
 
 
 }

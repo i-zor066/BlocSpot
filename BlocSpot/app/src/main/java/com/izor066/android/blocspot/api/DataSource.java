@@ -11,6 +11,7 @@ import com.izor066.android.blocspot.api.model.database.DatabaseOpenHelper;
 import com.izor066.android.blocspot.api.model.database.table.CategoriesTable;
 import com.izor066.android.blocspot.api.model.database.table.PointsOfInterestTable;
 import com.izor066.android.blocspot.api.model.database.table.Table;
+import com.izor066.android.blocspot.ui.fragment.CategoryDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,6 +147,23 @@ public class DataSource {
         }
 
         return allPoints;
+
+    }
+
+    public List<PointOfInterest> getPointsOfInterestForCategory(String categoryName) {
+        if (categoryName.equals(CategoryDialogFragment.ALL_CATEGORIES)) {
+            return getAllPointsOfInterest();
+        }
+        Cursor cursor = PointsOfInterestTable.getAllForCategory(databaseOpenHelper.getReadableDatabase(), categoryName);
+        List<PointOfInterest> allPointsForCat = new ArrayList<PointOfInterest>();
+        if (cursor.moveToFirst()) {
+            do {
+                allPointsForCat.add(pointOfInterestFromCursor(cursor));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return allPointsForCat;
 
     }
 
