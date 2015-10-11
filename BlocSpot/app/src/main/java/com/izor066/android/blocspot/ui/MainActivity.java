@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
             }
         });
 
+        adapter.notifyDataSetChanged();
+
 
         tabs.setViewPager(pager);
 
@@ -189,7 +191,8 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
         Toast.makeText(this, "Category View for " + categoryViewSelected + " selected.", Toast.LENGTH_SHORT).show();
         currentCategory = categoryViewSelected;
         Log.v("MainActivity", currentCategory);
-       adapter.updateCategory(currentCategory);
+        adapter.updateCategory(currentCategory);
+        adapter.notifyDataSetChanged();
     }
 
     // Category assignment
@@ -208,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
         BlocSpotApplication.getSharedDataSource().updatePointOfInterestCategory(mPointOfInterest, mCategoryName);
         Toast.makeText(this, "Category for " + mPointOfInterest.getTitle() + " changed to " + mCategoryName + ".", Toast.LENGTH_SHORT).show();
         mItemAdapter.notifyDataSetChanged();
+        adapter.updateMap();
     }
 
 

@@ -28,6 +28,7 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
     private ItemAdapter itemAdapter;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_points_of_interest_fragment_list, container, false);

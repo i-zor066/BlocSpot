@@ -23,6 +23,8 @@ import com.izor066.android.blocspot.ui.UIUtils;
 
 import java.util.List;
 
+import static com.izor066.android.blocspot.ui.fragment.CategoryDialogFragment.ALL_CATEGORIES;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -32,7 +34,9 @@ public class PointsOfInterestMapFragment extends Fragment {
 
     MapView mapView;
 
-    List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
+    List<PointOfInterest> pointsOfInterest;
+    private GoogleMap googleMap;
+    public String currentCategory = ALL_CATEGORIES;
 
 
     @Override
@@ -49,12 +53,29 @@ public class PointsOfInterestMapFragment extends Fragment {
 
         MapsInitializer.initialize(getActivity().getApplicationContext());
 
-       GoogleMap googleMap = mapView.getMap();
+        googleMap = mapView.getMap();
 
-        int size = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
+        updateMap();
+
+
+        return view;
+    }
+
+    public void updateMap() {
+
+        if (currentCategory == ALL_CATEGORIES) {
+
+            pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
+        } else {
+            pointsOfInterest = BlocSpotApplication.getSharedDataSource().getPointsOfInterestForCategory(currentCategory);
+        }
+
+        int size = pointsOfInterest.size();
 
         float lat = pointsOfInterest.get(0).getLatitude();
         float lon = pointsOfInterest.get(0).getLongitude();
+
+        googleMap.clear();
 
         for (int i = 0; i < size; i++) {
             String title = pointsOfInterest.get(i).getTitle();
@@ -79,9 +100,10 @@ public class PointsOfInterestMapFragment extends Fragment {
                 .target(new LatLng(lat, lon)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
+    }
 
-
-        return view;
+    public void updateCategory(String category) {
+        currentCategory = category;
     }
 
 

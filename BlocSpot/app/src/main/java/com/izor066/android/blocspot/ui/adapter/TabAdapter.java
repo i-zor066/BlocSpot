@@ -3,6 +3,7 @@ package com.izor066.android.blocspot.ui.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 import com.izor066.android.blocspot.ui.fragment.PointsOfInterestFragmentList;
 import com.izor066.android.blocspot.ui.fragment.PointsOfInterestMapFragment;
@@ -16,6 +17,7 @@ public class TabAdapter extends FragmentStatePagerAdapter {
     CharSequence mTitles[];
     int mNumbOfTabs;
     private PointsOfInterestFragmentList pointsOfInterestFragmentList;
+    private PointsOfInterestMapFragment pointsOfInterestMapFragment;
 
 
     public TabAdapter(FragmentManager fm, CharSequence Titles[], int NumbOfTabsumb) {
@@ -34,14 +36,41 @@ public class TabAdapter extends FragmentStatePagerAdapter {
             pointsOfInterestFragmentList = new PointsOfInterestFragmentList();
             return pointsOfInterestFragmentList;
         } else {
-            PointsOfInterestMapFragment pointsOfInterestMapFragment = new PointsOfInterestMapFragment();
+            pointsOfInterestMapFragment = new PointsOfInterestMapFragment();
             return pointsOfInterestMapFragment;
         }
 
     }
 
     public void updateCategory(String category) {
-        pointsOfInterestFragmentList.updateCategory(category);
+        try {
+            pointsOfInterestFragmentList.updateCategory(category);
+            pointsOfInterestMapFragment.updateCategory(category);
+        } catch (NullPointerException e) {
+            Log.v("NullPointerException TA", String.valueOf(e));
+
+        }
+
+        try {
+            pointsOfInterestMapFragment.updateMap();
+            Log.v("updateMap", "ran");
+        } catch (NullPointerException e) {
+            Log.v("NullPointerException MP", String.valueOf(e));
+
+        }
+        notifyDataSetChanged();
+
+    }
+
+    public void updateMap() {
+        try {
+            pointsOfInterestMapFragment.updateMap();
+            Log.v("updateMap", "ran");
+        } catch (NullPointerException e) {
+            Log.v("NullPointerException MP", String.valueOf(e));
+
+        }
+        notifyDataSetChanged();
     }
 
 
