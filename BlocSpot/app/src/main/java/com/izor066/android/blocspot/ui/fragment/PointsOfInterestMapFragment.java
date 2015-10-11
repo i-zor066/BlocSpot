@@ -33,7 +33,7 @@ public class PointsOfInterestMapFragment extends Fragment {
     MapView mapView;
 
     List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
-    private GoogleMap googleMap;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class PointsOfInterestMapFragment extends Fragment {
 
         MapsInitializer.initialize(getActivity().getApplicationContext());
 
-        GoogleMap googleMap1 = mapView.getMap();
+       GoogleMap googleMap = mapView.getMap();
 
         int size = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
 
@@ -72,12 +72,12 @@ public class PointsOfInterestMapFragment extends Fragment {
                     .defaultMarker(colorH));
 
 
-            googleMap1.addMarker(marker);
+            googleMap.addMarker(marker);
 
         }
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(lat, lon)).zoom(12).build();
-        googleMap1.animateCamera(CameraUpdateFactory
+        googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
 
 
