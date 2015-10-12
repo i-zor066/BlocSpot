@@ -53,12 +53,12 @@ public class TabAdapter extends FragmentStatePagerAdapter {
 
         try {
             pointsOfInterestMapFragment.updateMap();
-            Log.v("updateMap", "ran");
+            Log.v("updateMap CAT", "ran");
         } catch (NullPointerException e) {
-            Log.v("NullPointerException MP", String.valueOf(e));
+            Log.v("NPE MP CAT", String.valueOf(e));
 
         }
-        notifyDataSetChanged();
+      //  notifyDataSetChanged();
 
     }
 
@@ -70,7 +70,7 @@ public class TabAdapter extends FragmentStatePagerAdapter {
             Log.v("NullPointerException MP", String.valueOf(e));
 
         }
-        notifyDataSetChanged();
+      //  notifyDataSetChanged();
     }
 
 
