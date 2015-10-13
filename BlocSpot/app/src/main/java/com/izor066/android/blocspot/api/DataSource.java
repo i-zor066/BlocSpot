@@ -70,7 +70,7 @@ public class DataSource {
                     .setLongitude(-0.1874554f)
                     .insert(writableDatabase);
             new CategoriesTable.Builder()
-                    .setCategoryName("")
+                    .setCategoryName("Unsorted")
                     .insert(writableDatabase);
 
 
@@ -97,6 +97,14 @@ public class DataSource {
                 .insert(writableDatabase);
     }
 
+    public void updatePointOfInterestCategory(PointOfInterest pointOfInterest, String categoryName) {
+        SQLiteDatabase writableDatabase = databaseOpenHelper.getWritableDatabase();
+        String pointOfInterestTitle = pointOfInterest.getTitle();
+        new PointsOfInterestTable.Builder()
+                .setCategory(categoryName)
+                .updateForTitle(writableDatabase, pointOfInterestTitle);
+    }
+
 
     // Retrieve PointsOfInterest
 
@@ -108,7 +116,8 @@ public class DataSource {
         String address = PointsOfInterestTable.getAddress(cursor);
         float latitude = PointsOfInterestTable.getLatitude(cursor);
         float longitude = PointsOfInterestTable.getLongitude(cursor);
-        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude);
+        String poiCategory = PointsOfInterestTable.getPoiCategory(cursor);
+        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory);
         cursor.close();
         return pointOfInterest;
     }
@@ -120,7 +129,8 @@ public class DataSource {
         String address = PointsOfInterestTable.getAddress(cursor);
         float latitude = PointsOfInterestTable.getLatitude(cursor);
         float longitude = PointsOfInterestTable.getLongitude(cursor);
-        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude);
+        String poiCategory = PointsOfInterestTable.getPoiCategory(cursor);
+        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory);
         cursor.close();
         return pointOfInterest;
     }
@@ -146,7 +156,8 @@ public class DataSource {
         String address = PointsOfInterestTable.getAddress(cursor);
         float latitude = PointsOfInterestTable.getLatitude(cursor);
         float longitude = PointsOfInterestTable.getLongitude(cursor);
-        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude);
+        String poiCategory = PointsOfInterestTable.getPoiCategory(cursor);
+        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory);
         //cursor.close();
         return pointOfInterest;
     }
@@ -172,6 +183,19 @@ public class DataSource {
         }
 
         return allCategories;
+    }
+
+    public List<String> getAllCategoryNames() {
+        Cursor cursor = CategoriesTable.getAllCategories(databaseOpenHelper.getReadableDatabase());
+        List<String> allCategoryNames = new ArrayList<String>();
+        if (cursor.moveToFirst()) {
+            do {
+                allCategoryNames.add(categoryFromCursor(cursor).getCategoryName());
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return allCategoryNames;
     }
 
 

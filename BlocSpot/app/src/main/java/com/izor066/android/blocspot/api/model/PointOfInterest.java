@@ -14,14 +14,18 @@ public class PointOfInterest implements Parcelable {
     private final String address;
     private final float longitude;
     private final float latitude;
+    private final String poiCategory;
 
-    public PointOfInterest(long rowId, String title, String address, float latitude, float longitude) {
+
+
+    public PointOfInterest(long rowId, String title, String address, float latitude, float longitude, String poiCategory) {
 
         this.rowId = rowId;
         this.title = title;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.poiCategory = poiCategory;
 
     }
 
@@ -46,6 +50,10 @@ public class PointOfInterest implements Parcelable {
         return longitude;
     }
 
+    public String getPoiCategory() {
+        return poiCategory;
+    }
+
 
     @Override
     public int describeContents() {
@@ -61,6 +69,7 @@ public class PointOfInterest implements Parcelable {
         bundle.putString("address", address);
         bundle.putFloat("latitude", latitude);
         bundle.putFloat("longitude", longitude);
+        bundle.putString("poiCategory", poiCategory);
 
         dest.writeBundle(bundle);
 
@@ -75,7 +84,8 @@ public class PointOfInterest implements Parcelable {
                     bundle.getString("title"),
                     bundle.getString("address"),
                     bundle.getFloat("latitude"),
-                    bundle.getFloat("longitude"));
+                    bundle.getFloat("longitude"),
+                    bundle.getString("poiCategory"));
         }
 
         public PointOfInterest[] newArray(int size) {

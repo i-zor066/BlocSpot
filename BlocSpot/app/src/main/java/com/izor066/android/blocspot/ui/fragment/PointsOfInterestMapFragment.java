@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.izor066.android.blocspot.BlocSpotApplication;
 import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
+import com.izor066.android.blocspot.ui.UIUtils;
 
 import java.util.List;
 
@@ -61,12 +62,15 @@ public class PointsOfInterestMapFragment extends Fragment {
             lat = pointsOfInterest.get(i).getLatitude();
             lon = pointsOfInterest.get(i).getLongitude();
             String address = pointsOfInterest.get(i).getAddress();
+            String categoryName = pointsOfInterest.get(i).getPoiCategory();
+            int color = BlocSpotApplication.getSharedDataSource().getCategoryFromDBWithCategoryName(categoryName).getColor();
+            float colorH = UIUtils.getHueFromRGB(color);
 
             MarkerOptions marker = new MarkerOptions().position(
                     new LatLng(lat, lon)).title(title).snippet(address);
 
             marker.icon(BitmapDescriptorFactory
-                    .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+                    .defaultMarker(colorH));
 
 
             googleMap.addMarker(marker);
