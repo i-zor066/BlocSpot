@@ -3,7 +3,6 @@ package com.izor066.android.blocspot.ui.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
 import com.izor066.android.blocspot.ui.fragment.PointsOfInterestFragmentList;
 import com.izor066.android.blocspot.ui.fragment.PointsOfInterestMapFragment;
@@ -43,34 +42,17 @@ public class TabAdapter extends FragmentStatePagerAdapter {
     }
 
     public void updateCategory(String category) {
-        try {
             pointsOfInterestFragmentList.updateCategory(category);
             pointsOfInterestMapFragment.updateCategory(category);
-        } catch (NullPointerException e) {
-            Log.v("NullPointerException TA", String.valueOf(e));
 
-        }
-
-        try {
             pointsOfInterestMapFragment.updateMap();
-            Log.v("updateMap CAT", "ran");
-        } catch (NullPointerException e) {
-            Log.v("NPE MP CAT", String.valueOf(e));
 
-        }
-      //  notifyDataSetChanged();
+
 
     }
 
     public void updateMap() {
-        try {
             pointsOfInterestMapFragment.updateMap();
-            Log.v("updateMap", "ran");
-        } catch (NullPointerException e) {
-            Log.v("NullPointerException MP", String.valueOf(e));
-
-        }
-      //  notifyDataSetChanged();
     }
 
 
