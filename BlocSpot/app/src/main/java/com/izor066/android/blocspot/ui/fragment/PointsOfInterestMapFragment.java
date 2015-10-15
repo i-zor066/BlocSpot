@@ -72,6 +72,12 @@ public class PointsOfInterestMapFragment extends Fragment {
 
         int size = pointsOfInterest.size();
 
+        if (size == 0) {
+            googleMap.clear();
+            return;
+        }
+
+
         float lat = pointsOfInterest.get(0).getLatitude();
         float lon = pointsOfInterest.get(0).getLongitude();
 
