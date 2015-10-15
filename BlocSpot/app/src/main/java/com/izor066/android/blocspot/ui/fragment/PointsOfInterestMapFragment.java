@@ -23,6 +23,8 @@ import com.izor066.android.blocspot.ui.UIUtils;
 
 import java.util.List;
 
+import static com.izor066.android.blocspot.ui.fragment.CategoryDialogFragment.ALL_CATEGORIES;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -32,7 +34,10 @@ public class PointsOfInterestMapFragment extends Fragment {
 
     MapView mapView;
 
-    List<PointOfInterest> pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
+    List<PointOfInterest> pointsOfInterest;
+    private GoogleMap googleMap;
+    public String currentCategory = ALL_CATEGORIES;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,16 +51,37 @@ public class PointsOfInterestMapFragment extends Fragment {
         mapView.onResume();
         Log.v("MapFragment", "mapView.onResume");
 
-
         MapsInitializer.initialize(getActivity().getApplicationContext());
 
+        googleMap = mapView.getMap();
 
-        GoogleMap googleMap = mapView.getMap();
+        updateMap();
 
-        int size = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
+
+        return view;
+    }
+
+    public void updateMap() {
+
+        if (currentCategory == ALL_CATEGORIES) {
+
+            pointsOfInterest = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest();
+        } else {
+            pointsOfInterest = BlocSpotApplication.getSharedDataSource().getPointsOfInterestForCategory(currentCategory);
+        }
+
+        int size = pointsOfInterest.size();
+
+        if (size == 0) {
+            googleMap.clear();
+            return;
+        }
+
 
         float lat = pointsOfInterest.get(0).getLatitude();
         float lon = pointsOfInterest.get(0).getLongitude();
+
+        googleMap.clear();
 
         for (int i = 0; i < size; i++) {
             String title = pointsOfInterest.get(i).getTitle();
@@ -80,9 +106,10 @@ public class PointsOfInterestMapFragment extends Fragment {
                 .target(new LatLng(lat, lon)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
+    }
 
-
-        return view;
+    public void updateCategory(String category) {
+        currentCategory = category;
     }
 
 
@@ -91,6 +118,7 @@ public class PointsOfInterestMapFragment extends Fragment {
         super.onResume();
         mapView.onResume();
         Log.v("MapFragment", "onResume");
+
     }
 
     @Override
@@ -98,6 +126,7 @@ public class PointsOfInterestMapFragment extends Fragment {
         super.onPause();
         mapView.onPause();
         Log.v("MapFragment", "onPause");
+
     }
 
     @Override
@@ -112,5 +141,6 @@ public class PointsOfInterestMapFragment extends Fragment {
         super.onLowMemory();
         mapView.onLowMemory();
     }
+
 
 }

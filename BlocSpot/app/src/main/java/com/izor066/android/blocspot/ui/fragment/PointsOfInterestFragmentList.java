@@ -28,6 +28,7 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
     private ItemAdapter itemAdapter;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_points_of_interest_fragment_list, container, false);
@@ -82,17 +83,18 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
 
     @Override
     public void onPointOfInterestClick(PointOfInterest pointOfInterest) {
-//       Intent intent = new Intent(getActivity(), MapPane.class);
-//        intent.putExtra("poi", pointOfInterest);
-//        startActivity(intent);
         listener.onPointOfInterestClick(pointOfInterest);
     }
 
     @Override
     public void onPointOfInterestLongClick(PointOfInterest pointOfInterest) {
-//        Toast.makeText(getActivity(), pointOfInterest.getTitle(), Toast.LENGTH_SHORT).show();
         listener.onPointOfInterestLongClick(pointOfInterest, itemAdapter);
 
+    }
+
+    public void updateCategory(String categoryViewSelected) {
+        itemAdapter.updateCategory(categoryViewSelected);
+        itemAdapter.notifyDataSetChanged();
     }
 
     public interface OnPointOfInterestClickListener {

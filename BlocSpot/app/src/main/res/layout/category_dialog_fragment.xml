@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-
+    android:layout_width="match_parent" android:layout_height="wrap_content">
 
     <EditText
         android:id="@+id/et_category_name"
@@ -10,8 +9,16 @@
         android:hint="@string/new_category_name_hint"
         android:inputType="textCapWords"
         android:imeOptions="actionDone"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
         android:maxLines="1"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sp_select_category_view"
+        android:layout_alignParentLeft="true"
+        android:prompt="@string/sp_title"
+        android:spinnerMode="dropdown"
+        android:layout_below="@id/et_category_name" />
 
 </RelativeLayout>

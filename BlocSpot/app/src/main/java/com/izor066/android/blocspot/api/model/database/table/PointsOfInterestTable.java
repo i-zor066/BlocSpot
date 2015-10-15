@@ -92,6 +92,15 @@ public class PointsOfInterestTable extends Table {
         return readonlyDatabase.rawQuery("SELECT * FROM " + NAME + " ORDER BY ?", new String[]{COLUMN_TITLE});
     }
 
+    public static Cursor getAllForCategory(SQLiteDatabase readonlyDatabase, String categoryName) {
+        return readonlyDatabase.query(true, NAME, null, COLUMN_POI_CATEGORY + " = ?",
+                new String[]{categoryName}, null, null, null, null);
+    }
+
+//    public static Cursor getAllForCatOrder(SQLiteDatabase readonlyDatabase, String categoryName) {
+//        return readonlyDatabase.query(true, NAME, null, COLUMN_POI_CATEGORY + " = ?", new String[]{categoryName}, null, null, COLUMN_TITLE + " DESC", null);
+//    }
+
 
 
     @Override
