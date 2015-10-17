@@ -54,6 +54,17 @@ public class PointOfInterest implements Parcelable {
         return poiCategory;
     }
 
+    @Override
+    public String toString() {
+        return "PointOfInterest{" +
+                "rowId=" + rowId +
+                ", title='" + title + '\'' +
+                ", address='" + address + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", poiCategory='" + poiCategory + '\'' +
+                '}';
+    }
 
     @Override
     public int describeContents() {
