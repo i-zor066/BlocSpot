@@ -32,6 +32,6 @@
     <string name="menu_category">Category</string>
     <string name="app_label">BlocSpot</string>
     <string name="search_hint">Seach on Yelp</string>
-    <string name="search_result">Search results</string>
+    <string name="search_result">Loading Search Results</string>
 
 </resources>

@@ -74,6 +74,7 @@ public class MapSearchResults extends Activity implements OnMapReadyCallback, Go
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        marker.showInfoWindow();
         Toast.makeText(this, marker.getTitle(), Toast.LENGTH_SHORT).show();
         Log.v("Marker clicked", marker.getTitle() + ", " + marker.getSnippet() + ", " + marker.getPosition().latitude + ", " + marker.getPosition().longitude);
         return true;

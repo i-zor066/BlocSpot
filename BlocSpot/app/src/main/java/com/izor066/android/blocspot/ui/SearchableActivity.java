@@ -15,10 +15,9 @@ import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.Yelp.YelpAPI;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,12 +76,11 @@ public class SearchableActivity extends AppCompatActivity {
             @Override
             protected List<PointOfInterest> doInBackground(Void... params) {
                 return parseJson(yelpAPI.searchForBusinessesByLocation(query, location));
-                // ToDo: Parse Results
+
             }
 
             @Override
             protected void onPostExecute(List<PointOfInterest> result) {
-                //TODO result is List<PointOfInterest>
                 ArrayList<PointOfInterest> pointsOfInterestToSend = new ArrayList<PointOfInterest>(result);
                 Log.v("SEARCH", "Results: " + result);
                 Intent intent = new Intent(SearchableActivity.this, MapSearchResults.class);
@@ -95,27 +93,26 @@ public class SearchableActivity extends AppCompatActivity {
 
     }
 
+
     private List<PointOfInterest> parseJson(String json) {
         List<PointOfInterest> pointsOfInterest = new ArrayList<>();
-        JSONParser parser = new JSONParser();
-        JSONObject response = null;
-        try {
-            response = (JSONObject) parser.parse(json);
-        } catch (ParseException pe) {
-            Log.e("json", "Error: could not parse JSON response:");
-            Log.e("json", json);
-        }
 
-        JSONArray businesses = (JSONArray) response.get("businesses");
-        for (int i = 0; i < businesses.size(); i++) {
-            JSONObject business = (JSONObject) businesses.get(i);
-            String title = (String) business.get("name");
-            JSONObject location = (JSONObject) business.get("location");
-            String address = location.get("address").toString();
-            float latitude = (float)(double)((JSONObject)location.get("coordinate")).get("latitude");
-            float longitude = (float)(double)((JSONObject)location.get("coordinate")).get("longitude");
-            PointOfInterest pointOfInterest = new PointOfInterest(-1, title, address, latitude, longitude, "Unsorted");
-            pointsOfInterest.add(pointOfInterest);
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray businesses = jsonObject.getJSONArray("businesses");
+            for (int i = 0; i < businesses.length(); i++) {
+                JSONObject business = businesses.getJSONObject(i);
+                String title = business.getString("name");
+                String address = (String) business.getJSONObject("location").getJSONArray("address").get(0) + ", " + (String) business.getJSONObject("location").getString("city");
+                float latitude = (float) business.getJSONObject("location").getJSONObject("coordinate").getDouble("latitude");
+                float longitude = (float) business.getJSONObject("location").getJSONObject("coordinate").getDouble("longitude");
+                PointOfInterest pointOfInterest = new PointOfInterest(-1, title, address, latitude, longitude, "Unsorted");
+                pointsOfInterest.add(pointOfInterest);
+
+            }
+
+        } catch (JSONException e) {
+            Log.e("JSONExecption", String.valueOf(e));
         }
 
         return pointsOfInterest;
