@@ -1,7 +1,8 @@
 package com.izor066.android.blocspot.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,15 +16,17 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
+import com.izor066.android.blocspot.ui.fragment.SavePointOfInterestYelpFragment;
 
 import java.util.ArrayList;
 
 /**
  * Created by igor on 17/10/15.
  */
-public class MapSearchResults extends Activity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapSearchResults extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     PointOfInterest pointOfInterest;
+    PointOfInterest pointOfInterestClicked;
     int color;
 
     ArrayList<PointOfInterest> pointsOfInterest;
@@ -77,6 +80,20 @@ public class MapSearchResults extends Activity implements OnMapReadyCallback, Go
         marker.showInfoWindow();
         Toast.makeText(this, marker.getTitle(), Toast.LENGTH_SHORT).show();
         Log.v("Marker clicked", marker.getTitle() + ", " + marker.getSnippet() + ", " + marker.getPosition().latitude + ", " + marker.getPosition().longitude);
+        pointOfInterestClicked = new PointOfInterest(-1, marker.getTitle(), marker.getSnippet(),(float) marker.getPosition().latitude, (float) marker.getPosition().longitude, "Unsorted");
+        AddPoiFromMarkerListener addPoiFromMarkerListener = (AddPoiFromMarkerListener) this;
+        addPoiFromMarkerListener.onMarkerClicked(pointOfInterestClicked);
+        showSavePointOfInterestYelpFragment();
         return true;
+    }
+
+    public interface AddPoiFromMarkerListener {
+        void onMarkerClicked(PointOfInterest pointOfInterest);
+    }
+
+    private void showSavePointOfInterestYelpFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        SavePointOfInterestYelpFragment savePointOfInterestYelpFragment = new SavePointOfInterestYelpFragment();
+        savePointOfInterestYelpFragment.show(fragmentManager, "Save POI Yelp Fragment");
     }
 }

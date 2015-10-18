@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name:"
+        android:id="@+id/tv_add_yelp_name_label" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/tv_add_yelp_name"
+        android:layout_below="@+id/tv_add_yelp_name_label"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address:"
+        android:id="@+id/tv_add_yelp_address_label"
+        android:layout_below="@+id/tv_add_yelp_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/tv_add_yelp_address"
+        android:layout_below="@+id/tv_add_yelp_address_label"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Category:"
+        android:id="@+id/tv_add_yelp_select_category_label"
+        android:layout_below="@+id/tv_add_yelp_address"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sp_select_category_yelp"
+        android:spinnerMode="dropdown"
+        android:layout_below="@+id/tv_add_yelp_select_category_label"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </Spinner>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/bt_add_yelp_submit"
+        android:layout_below="@+id/sp_select_category_yelp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="44dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="34dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/bt_add_yelp_cancel"
+        android:layout_alignBottom="@+id/bt_add_yelp_submit"
+        android:layout_toRightOf="@+id/bt_add_yelp_submit"
+        android:layout_toEndOf="@+id/bt_add_yelp_submit"
+        android:layout_marginLeft="42dp"
+        android:layout_marginStart="42dp" />
+
+</RelativeLayout>
