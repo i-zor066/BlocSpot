@@ -15,14 +15,13 @@ import android.widget.Toast;
 import com.izor066.android.blocspot.BlocSpotApplication;
 import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.api.model.PointOfInterest;
-import com.izor066.android.blocspot.ui.MapSearchResults;
 
 import java.util.List;
 
 /**
  * Created by igor on 18/10/15.
  */
-public class SavePointOfInterestYelpFragment extends DialogFragment implements AdapterView.OnItemSelectedListener, MapSearchResults.AddPoiFromMarkerListener, Button.OnClickListener {
+public class SavePointOfInterestYelpFragment extends DialogFragment implements AdapterView.OnItemSelectedListener, Button.OnClickListener {
 
     Spinner selectCategorySpinner;
     ArrayAdapter<String> dataAdapter;
@@ -43,6 +42,8 @@ public class SavePointOfInterestYelpFragment extends DialogFragment implements A
         poiAddress = (TextView) view.findViewById(R.id.tv_add_yelp_address);
         submit = (Button) view.findViewById(R.id.bt_add_yelp_submit);
         cancel = (Button) view.findViewById(R.id.bt_add_yelp_cancel);
+
+        pointOfInterestFromMarker = getArguments().getParcelable("point_of_interest_from_click");
 
         poiName.setText(pointOfInterestFromMarker.getTitle());
         poiAddress.setText(pointOfInterestFromMarker.getAddress());
@@ -78,10 +79,6 @@ public class SavePointOfInterestYelpFragment extends DialogFragment implements A
 
     }
 
-    @Override
-    public void onMarkerClicked(PointOfInterest pointOfInterest) {
-        pointOfInterestFromMarker = pointOfInterest;
-    }
 
     @Override
     public void onClick(View v) {

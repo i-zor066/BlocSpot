@@ -81,19 +81,17 @@ public class MapSearchResults extends AppCompatActivity implements OnMapReadyCal
         Toast.makeText(this, marker.getTitle(), Toast.LENGTH_SHORT).show();
         Log.v("Marker clicked", marker.getTitle() + ", " + marker.getSnippet() + ", " + marker.getPosition().latitude + ", " + marker.getPosition().longitude);
         pointOfInterestClicked = new PointOfInterest(-1, marker.getTitle(), marker.getSnippet(),(float) marker.getPosition().latitude, (float) marker.getPosition().longitude, "Unsorted");
-        AddPoiFromMarkerListener addPoiFromMarkerListener = (AddPoiFromMarkerListener) this;
-        addPoiFromMarkerListener.onMarkerClicked(pointOfInterestClicked);
-        showSavePointOfInterestYelpFragment();
+        showSavePointOfInterestYelpFragment(pointOfInterestClicked);
         return true;
     }
 
-    public interface AddPoiFromMarkerListener {
-        void onMarkerClicked(PointOfInterest pointOfInterest);
-    }
 
-    private void showSavePointOfInterestYelpFragment() {
+    private void showSavePointOfInterestYelpFragment(PointOfInterest pointOfInterest) {
+        Bundle args = new Bundle();
+        args.putParcelable("point_of_interest_from_click", pointOfInterest);
         FragmentManager fragmentManager = getSupportFragmentManager();
         SavePointOfInterestYelpFragment savePointOfInterestYelpFragment = new SavePointOfInterestYelpFragment();
+        savePointOfInterestYelpFragment.setArguments(args);
         savePointOfInterestYelpFragment.show(fragmentManager, "Save POI Yelp Fragment");
     }
 }
