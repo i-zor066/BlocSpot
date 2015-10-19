@@ -72,6 +72,7 @@ public class SavePointOfInterestYelpFragment extends DialogFragment implements A
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String category = parent.getItemAtPosition(position).toString();
         pointOfInterestToSave = new PointOfInterest(-1, pointOfInterestFromMarker.getTitle(), pointOfInterestFromMarker.getAddress(),pointOfInterestFromMarker.getLatitude(), pointOfInterestFromMarker.getLongitude(), category);
+
     }
 
     @Override
@@ -88,7 +89,8 @@ public class SavePointOfInterestYelpFragment extends DialogFragment implements A
                 Toast.makeText(getActivity(), "Please Select a Category.", Toast.LENGTH_SHORT).show();
             } else {
                 BlocSpotApplication.getSharedDataSource().insertPointToDatabase(pointOfInterestToSave);
-                Toast.makeText(getActivity(), pointOfInterestToSave.getTitle() + " saved.", Toast.LENGTH_SHORT).show();
+                dismiss();
+                Toast.makeText(getActivity(), pointOfInterestToSave.getTitle() + " saved." + ": " + pointOfInterestToSave.getPoiCategory(), Toast.LENGTH_SHORT).show();
             }
 
         } else {
