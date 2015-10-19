@@ -33,5 +33,9 @@
     <string name="app_label">BlocSpot</string>
     <string name="search_hint">Seach on Yelp</string>
     <string name="search_result">Loading Search Results</string>
+    <string name="save_poi">Save the Point of Interest?</string>
+    <string name="name_label">Name:</string>
+    <string name="address_label">Address:</string>
+    <string name="select_category_label">Select Category:</string>
 
 </resources>
