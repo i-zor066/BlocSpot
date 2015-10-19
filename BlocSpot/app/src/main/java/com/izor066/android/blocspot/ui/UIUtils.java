@@ -4,7 +4,9 @@ import android.graphics.Color;
 
 import java.util.Random;
 
-import static android.graphics.Color.*;
+import static android.graphics.Color.blue;
+import static android.graphics.Color.green;
+import static android.graphics.Color.red;
 
 /**
  * Created by igor on 4/10/15.

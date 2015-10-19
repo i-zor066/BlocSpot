@@ -3,6 +3,9 @@ package com.izor066.android.blocspot.ui;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +13,7 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.Toast;
 
 import com.izor066.android.blocspot.R;
 import com.izor066.android.blocspot.Yelp.YelpAPI;
@@ -19,8 +23,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by igor on 16/10/15.
@@ -29,6 +35,7 @@ public class SearchableActivity extends AppCompatActivity {
 
     YelpAPI yelpAPI;
     String results;
+    //Location currentLocation;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +65,8 @@ public class SearchableActivity extends AppCompatActivity {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            searchYelp(query, "London");
+           // String city = getCityFromLocation(currentLocation);
+            searchYelp(query, "London, UK");
 
         }
     }
@@ -86,6 +94,7 @@ public class SearchableActivity extends AppCompatActivity {
                 Intent intent = new Intent(SearchableActivity.this, MapSearchResults.class);
                 intent.putParcelableArrayListExtra("points_of_interest", pointsOfInterestToSend);
                 startActivity(intent);
+                finish();
             }
 
         }.execute();
@@ -117,4 +126,34 @@ public class SearchableActivity extends AppCompatActivity {
 
         return pointsOfInterest;
     }
+
+    // ToDo: getCityFromLocation - still loooking how to get last current location in here
+
+    public String getCityFromLocation(Location location) {
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+
+        String city;
+
+        List<Address> addresses = new ArrayList<Address>();
+
+        Geocoder geoCoder = new Geocoder(this, Locale.UK);
+
+        try {
+            addresses = geoCoder.getFromLocation(latitude, longitude, 1);
+        } catch (IOException e) {
+            Log.e("IOException", String.valueOf(e));
+        }
+
+        if (addresses.size() != 0) {
+            Address address = addresses.get(0);
+            city = address.getLocality();
+            return city;
+        } else {
+            Toast.makeText(this, "Couldn't get your location. Defaulting to: London, UK.", Toast.LENGTH_SHORT).show();
+            return "London, UK";
+        }
+    }
+
+
 }

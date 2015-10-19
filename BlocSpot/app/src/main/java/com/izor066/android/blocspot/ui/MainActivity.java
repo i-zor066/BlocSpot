@@ -229,5 +229,24 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     }
 
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.v("MainActivity", "Paused");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.v("MainActivity", "OnResumeRan");
+
+        if (mItemAdapter != null) {
+            mItemAdapter.notifyDataSetChanged();
+            adapter.updateMap();
+            Log.v("MainActivity", "UpdateRan");
+        }
+    }
+
+
 
 }

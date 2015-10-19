@@ -91,6 +91,7 @@ public class SavePointOfInterestYelpFragment extends DialogFragment implements A
                 BlocSpotApplication.getSharedDataSource().insertPointToDatabase(pointOfInterestToSave);
                 dismiss();
                 Toast.makeText(getActivity(), pointOfInterestToSave.getTitle() + " saved." + ": " + pointOfInterestToSave.getPoiCategory(), Toast.LENGTH_SHORT).show();
+
             }
 
         } else {

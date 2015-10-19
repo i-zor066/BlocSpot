@@ -1,6 +1,5 @@
 package com.izor066.android.blocspot.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -96,9 +95,9 @@ public class MapSearchResults extends AppCompatActivity implements OnMapReadyCal
         savePointOfInterestYelpFragment.show(fragmentManager, "Save POI Yelp Fragment");
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        this.startActivity(intent);
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent(this, MainActivity.class);
+//        this.startActivity(intent);
+//    }
 }
