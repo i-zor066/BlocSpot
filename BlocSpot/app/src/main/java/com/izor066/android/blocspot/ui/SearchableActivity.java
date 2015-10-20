@@ -4,8 +4,10 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,13 +35,18 @@ import java.util.Locale;
  */
 public class SearchableActivity extends AppCompatActivity {
 
+
     YelpAPI yelpAPI;
     String results;
-    //Location currentLocation;
+
+    Location currentLocation;
+
+    
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
+        currentLocation =  getLocation();
         handleIntent(getIntent());
     }
 
@@ -65,8 +72,9 @@ public class SearchableActivity extends AppCompatActivity {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-           // String city = getCityFromLocation(currentLocation);
-            searchYelp(query, "London, UK");
+            String city = getCityFromLocation(currentLocation);
+            //searchYelp(query, "London, UK");
+            searchYelp(query, city);
 
         }
     }
@@ -154,6 +162,16 @@ public class SearchableActivity extends AppCompatActivity {
             return "London, UK";
         }
     }
+
+    public Location getLocation()
+    {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String bestProvider = locationManager.getBestProvider(criteria, false);
+        Location location = locationManager.getLastKnownLocation(bestProvider);
+        return location;
+    }
+
 
 
 }
