@@ -81,7 +81,7 @@ public class MapSearchResults extends AppCompatActivity implements OnMapReadyCal
         marker.showInfoWindow();
         Toast.makeText(this, marker.getTitle(), Toast.LENGTH_SHORT).show();
         Log.v("Marker clicked", marker.getTitle() + ", " + marker.getSnippet() + ", " + marker.getPosition().latitude + ", " + marker.getPosition().longitude);
-        pointOfInterestClicked = new PointOfInterest(-1, marker.getTitle(), marker.getSnippet(),(float) marker.getPosition().latitude, (float) marker.getPosition().longitude, "Unsorted");
+        pointOfInterestClicked = new PointOfInterest(-1, marker.getTitle(), marker.getSnippet(),(float) marker.getPosition().latitude, (float) marker.getPosition().longitude, "Unsorted", "notSetYet");
         showSavePointOfInterestYelpFragment(pointOfInterestClicked);
         return true;
     }
