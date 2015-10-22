@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white_primary">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white_primary"
         android:layout_margin="@dimen/abc_dialog_padding_material">
 
         <TextView
@@ -16,14 +18,13 @@
             android:text="@string/save_poi"
             android:textSize="@dimen/abc_text_size_medium_material" />
 
-        <TextView
+    <TextView
             android:id="@+id/tv_add_yelp_name_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_add_yelp_header"
             android:layout_marginBottom="@dimen/abc_action_bar_default_padding_material"
             android:text="@string/name_label"
-            android:textAllCaps="true"
             android:textSize="@dimen/abc_text_size_medium_material"
             android:textStyle="bold" />
 
@@ -52,7 +53,6 @@
             android:layout_below="@+id/tv_add_yelp_name"
             android:layout_marginBottom="@dimen/abc_action_bar_default_padding_material"
             android:text="@string/address_label"
-            android:textAllCaps="true"
             android:textSize="@dimen/abc_text_size_medium_material"
             android:textStyle="bold" />
 
@@ -80,7 +80,6 @@
             android:layout_below="@+id/tv_add_yelp_address"
             android:layout_marginBottom="@dimen/abc_action_bar_default_padding_material"
             android:text="@string/select_category_label"
-            android:textAllCaps="true"
             android:textSize="@dimen/abc_text_size_medium_material"
             android:textStyle="bold" />
 
@@ -106,8 +105,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/sp_select_category_yelp"
             android:layout_marginBottom="@dimen/abc_action_bar_default_padding_material"
-            android:text="Add a note:"
-            android:textAllCaps="true"
+            android:text="@string/attach_note_label"
             android:textSize="@dimen/abc_text_size_medium_material"
             android:textStyle="bold" />
 
@@ -122,30 +120,33 @@
             android:layout_alignParentLeft="true"
             android:maxLines="5"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_add_note"
+            android:gravity="right"
+            android:layout_marginTop="30dp">
+
+        <Button
+            android:id="@+id/bt_add_yelp_cancel"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textColor="@color/ColorPrimary"
+            android:textSize="@dimen/abc_text_size_button_material" />
+
         <Button
             android:id="@+id/bt_add_yelp_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/et_add_note"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="34dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginLeft="8dp"
             android:text="Submit"
+            android:textColor="@color/ColorPrimary"
+            android:background="@color/white_primary"
             android:textSize="@dimen/abc_text_size_button_material" />
-
-        <Button
-            android:id="@+id/bt_add_yelp_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/bt_add_yelp_submit"
-            android:layout_marginLeft="42dp"
-            android:layout_marginStart="42dp"
-            android:layout_toEndOf="@+id/bt_add_yelp_submit"
-            android:layout_toRightOf="@+id/bt_add_yelp_submit"
-            android:text="Cancel"
-            android:textSize="@dimen/abc_text_size_button_material" />
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

@@ -1,11 +1,13 @@
 package com.izor066.android.blocspot.ui.fragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,6 +41,12 @@ public class SavePointOfInterestYelpFragment extends DialogFragment implements A
     Button cancel;
 
 
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +88,7 @@ public class SavePointOfInterestYelpFragment extends DialogFragment implements A
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mCategory = parent.getItemAtPosition(position).toString();
-        pointOfInterestToSave = new PointOfInterest(-1, pointOfInterestFromMarker.getTitle(), pointOfInterestFromMarker.getAddress(),pointOfInterestFromMarker.getLatitude(), pointOfInterestFromMarker.getLongitude(), mCategory, "notSetYet");
+      //  pointOfInterestToSave = new PointOfInterest(-1, pointOfInterestFromMarker.getTitle(), pointOfInterestFromMarker.getAddress(),pointOfInterestFromMarker.getLatitude(), pointOfInterestFromMarker.getLongitude(), mCategory, "notSetYet");
 
     }
 
