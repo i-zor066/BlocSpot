@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/abc_dialog_padding_material">
+
+        <TextView
+            android:id="@+id/tv_add_yelp_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/abc_action_bar_default_padding_material"
+            android:text="@string/save_poi"
+            android:textSize="@dimen/abc_text_size_medium_material" />
+
+        <TextView
+            android:id="@+id/tv_add_yelp_name_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_add_yelp_header"
+            android:layout_marginBottom="@dimen/abc_action_bar_default_padding_material"
+            android:text="@string/name_label"
+            android:textAllCaps="true"
+            android:textSize="@dimen/abc_text_size_medium_material"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tv_add_yelp_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_add_yelp_name_label"
+            android:layout_marginBottom="@dimen/abc_action_bar_default_padding_material"
+            android:text="New Text"
+            android:textSize="@dimen/abc_text_size_medium_material" />
+
+        <TextView
+            android:id="@+id/tv_add_yelp_address_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_add_yelp_name"
+            android:layout_marginBottom="@dimen/abc_action_bar_default_padding_material"
+            android:text="@string/address_label"
+            android:textAllCaps="true"
+            android:textSize="@dimen/abc_text_size_medium_material"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_add_yelp_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_add_yelp_address_label"
+            android:layout_marginBottom="@dimen/abc_action_bar_default_padding_material"
+            android:text="New Text"
+            android:textSize="@dimen/abc_text_size_medium_material" />
+
+        <TextView
+            android:id="@+id/tv_add_yelp_select_category_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_add_yelp_address"
+            android:layout_marginBottom="@dimen/abc_action_bar_default_padding_material"
+            android:text="@string/select_category_label"
+            android:textAllCaps="true"
+            android:textSize="@dimen/abc_text_size_medium_material"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/sp_select_category_yelp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_add_yelp_select_category_label"
+            android:layout_marginLeft="0dp"
+            android:spinnerMode="dropdown"
+            android:textSize="@dimen/abc_text_size_medium_material">
+        </Spinner>
+
+        <Button
+            android:id="@+id/bt_add_yelp_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/sp_select_category_yelp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="34dp"
+            android:text="Submit"
+            android:textSize="@dimen/abc_text_size_button_material" />
+
+        <Button
+            android:id="@+id/bt_add_yelp_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/bt_add_yelp_submit"
+            android:layout_marginLeft="42dp"
+            android:layout_marginStart="42dp"
+            android:layout_toEndOf="@+id/bt_add_yelp_submit"
+            android:layout_toRightOf="@+id/bt_add_yelp_submit"
+            android:text="Cancel"
+            android:textSize="@dimen/abc_text_size_button_material" />
+    </RelativeLayout>
+
+</RelativeLayout>

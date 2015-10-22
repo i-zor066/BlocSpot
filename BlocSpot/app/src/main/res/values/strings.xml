@@ -25,8 +25,17 @@
 
     <string name="new_category_name_hint">New Category Name</string>
     <string name="category_added">New Category Added:</string>
-    <string name="category_exists">Category Exists. Please pick another name.</string>
+    <string name="category_exists">Category exists. Please pick another name.</string>
     <string name="show_category">Show category</string>
     <string name="sp_title">Select Category:</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_category">Category</string>
+    <string name="app_label">BlocSpot</string>
+    <string name="search_hint">Seach on Yelp</string>
+    <string name="search_result">Loading Search Results</string>
+    <string name="save_poi">Save the Point of Interest?</string>
+    <string name="name_label">Name:</string>
+    <string name="address_label">Address:</string>
+    <string name="select_category_label">Select Category:</string>
 
 </resources>

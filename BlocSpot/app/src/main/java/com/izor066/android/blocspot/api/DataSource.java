@@ -87,6 +87,7 @@ public class DataSource {
                 .setAddress(pointOfInterest.getAddress())
                 .setLatitude(pointOfInterest.getLatitude())
                 .setLongitude(pointOfInterest.getLongitude())
+                .setCategory(pointOfInterest.getPoiCategory())
                 .insert(writableDatabase);
     }
 
