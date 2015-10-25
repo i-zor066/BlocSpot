@@ -40,7 +40,7 @@ public class ApplicationTest extends ApplicationTestCase<BlocSpotApplication> {
 
         assertNotNull(application.getDataSource());
 
-        PointOfInterest testPointOfInterest = new PointOfInterest(0l, "TestEntry", "10 Brock St, Kings Cross, London NW1 3FG, United Kingdom", 51.5261296f, -0.1394121f, "Unsorted");
+        PointOfInterest testPointOfInterest = new PointOfInterest(0l, "TestEntry", "10 Brock St, Kings Cross, London NW1 3FG, United Kingdom", 51.5261296f, -0.1394121f, "Unsorted", "notSetYet");
         application.getDataSource().insertPointToDatabase(testPointOfInterest);
 
 
@@ -50,7 +50,10 @@ public class ApplicationTest extends ApplicationTestCase<BlocSpotApplication> {
         assertEquals("Address NOT the same!", testPointOfInterest.getAddress(), testPointOfInterestDB.getAddress());
         assertEquals("Latitude NOT the same!", testPointOfInterest.getLatitude(), testPointOfInterestDB.getLatitude());
         assertEquals("Longitude NOT the same!", testPointOfInterest.getLongitude(), testPointOfInterestDB.getLongitude());
+        assertEquals("Note not the same", testPointOfInterest.getPoiNote(), testPointOfInterestDB.getPoiNote());
+
     }
+
 
     public void testCategoryDataBaseInsert () {
         setContext(new RenamingDelegatingContext(getContext(), "test_"));
@@ -76,7 +79,7 @@ public class ApplicationTest extends ApplicationTestCase<BlocSpotApplication> {
         List<Category> allCategories = application.getDataSource().getAllCategories();
         Category emptyRow = allCategories.get(0);
 
-        assertEquals("Category name default value is wrong!", "", emptyRow.getCategoryName());
+        assertEquals("Category name default value is wrong!", "Unsorted", emptyRow.getCategoryName());
         assertEquals("Colour default value is wrong!", 0, emptyRow.getColor());
 
 

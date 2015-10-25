@@ -88,6 +88,7 @@ public class DataSource {
                 .setLatitude(pointOfInterest.getLatitude())
                 .setLongitude(pointOfInterest.getLongitude())
                 .setCategory(pointOfInterest.getPoiCategory())
+                .setNote(pointOfInterest.getPoiNote())
                 .insert(writableDatabase);
     }
 
@@ -119,7 +120,8 @@ public class DataSource {
         float latitude = PointsOfInterestTable.getLatitude(cursor);
         float longitude = PointsOfInterestTable.getLongitude(cursor);
         String poiCategory = PointsOfInterestTable.getPoiCategory(cursor);
-        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory);
+        String poiNote = PointsOfInterestTable.getPoiNote(cursor);
+        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory, poiNote);
         cursor.close();
         return pointOfInterest;
     }
@@ -132,7 +134,8 @@ public class DataSource {
         float latitude = PointsOfInterestTable.getLatitude(cursor);
         float longitude = PointsOfInterestTable.getLongitude(cursor);
         String poiCategory = PointsOfInterestTable.getPoiCategory(cursor);
-        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory);
+        String poiNote = PointsOfInterestTable.getPoiNote(cursor);
+        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory, poiNote);
         cursor.close();
         return pointOfInterest;
     }
@@ -176,7 +179,8 @@ public class DataSource {
         float latitude = PointsOfInterestTable.getLatitude(cursor);
         float longitude = PointsOfInterestTable.getLongitude(cursor);
         String poiCategory = PointsOfInterestTable.getPoiCategory(cursor);
-        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory);
+        String poiNote = PointsOfInterestTable.getPoiNote(cursor);
+        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory, poiNote);
         //cursor.close();
         return pointOfInterest;
     }
