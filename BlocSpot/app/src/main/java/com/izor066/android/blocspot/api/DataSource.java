@@ -39,36 +39,42 @@ public class DataSource {
                     .setAddress("1-13 St Giles High St, London WC2H 8LG, United Kingdom")
                     .setLatitude(51.5160563f)
                     .setLongitude(-0.1271485f)
+                    .setNote("notSetYet")
                     .insert(writableDatabase);
             new PointsOfInterestTable.Builder()
                     .setTitle("Facebook London")
                     .setAddress("10 Brock St, Kings Cross, London NW1 3FG, United Kingdom")
                     .setLatitude(51.5261296f)
                     .setLongitude(-0.1394121f)
+                    .setNote("notSetYet")
                     .insert(writableDatabase);
             new PointsOfInterestTable.Builder()
                     .setTitle("Twitter HQ")
                     .setAddress("Air St, Soho, London W1B 5AG, United Kingdom")
                     .setLatitude(51.5104794f)
                     .setLongitude(-0.1366545f)
+                    .setNote("notSetYet")
                     .insert(writableDatabase);
             new PointsOfInterestTable.Builder()
                     .setTitle("SCE London")
                     .setAddress("10-15 Great Marlborough St, London W1F 7HR, United Kingdom")
                     .setLatitude(51.5146954f)
                     .setLongitude(-0.1391727f)
+                    .setNote("notSetYet")
                     .insert(writableDatabase);
             new PointsOfInterestTable.Builder()
                     .setTitle("Apple European HQ")
                     .setAddress("1 Hanover Street, London W1S 1YZ, United Kingdom")
                     .setLatitude(51.513833f)
                     .setLongitude(-0.1420289f)
+                    .setNote("notSetYet")
                     .insert(writableDatabase);
             new PointsOfInterestTable.Builder()
                     .setTitle("Rockstar International")
                     .setAddress("555 King's Rd, London SW6 2EB, United Kingdom")
                     .setLatitude(51.479068f)
                     .setLongitude(-0.1874554f)
+                    .setNote("notSetYet")
                     .insert(writableDatabase);
             new CategoriesTable.Builder()
                     .setCategoryName("Unsorted")
@@ -106,6 +112,14 @@ public class DataSource {
         String pointOfInterestTitle = pointOfInterest.getTitle();
         new PointsOfInterestTable.Builder()
                 .setCategory(categoryName)
+                .updateForTitle(writableDatabase, pointOfInterestTitle);
+    }
+
+    public void updatePointOfInterestVisited(PointOfInterest pointOfInterest) {
+        SQLiteDatabase writableDatabase = databaseOpenHelper.getWritableDatabase();
+        String pointOfInterestTitle = pointOfInterest.getTitle();
+        new PointsOfInterestTable.Builder()
+                .setVisited(pointOfInterest.isVisited())
                 .updateForTitle(writableDatabase, pointOfInterestTitle);
     }
 

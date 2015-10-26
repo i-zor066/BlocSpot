@@ -26,6 +26,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
     public static interface OnPointOfInterestClickListener {
         public void onPointOfInterestClick(PointOfInterest pointOfInterest);
         public void onPointOfInterestLongClick(PointOfInterest pointOfInterest);
+        public void onPointOfInterestCheckedChanged(PointOfInterest pointOfInterest);
     }
 
     private final OnPointOfInterestClickListener listener;
@@ -91,6 +92,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
             this.pointOfInterest = pointOfInterest;
             title.setText(pointOfInterest.getTitle());
             address.setText(pointOfInterest.getAddress());
+            visited.setChecked(pointOfInterest.isVisited());
             this.listener = listener;
 
             String categoryName = BlocSpotApplication.getSharedDataSource().getPOIfromDBwithTitle(pointOfInterest.getTitle()).getPoiCategory();
@@ -113,6 +115,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemAdapterVie
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             Log.v("Visited", "Checked changed to: " + isChecked);
+            listener.onPointOfInterestCheckedChanged(pointOfInterest);
         }
 
         @Override

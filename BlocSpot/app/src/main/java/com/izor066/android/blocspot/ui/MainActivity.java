@@ -220,6 +220,17 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
     }
 
     @Override
+    public void onPointOfInterestCheckedChange(PointOfInterest pointOfInterest, ItemAdapter itemAdapter) {
+        mItemAdapter = itemAdapter;
+        boolean visited = !pointOfInterest.isVisited();
+        PointOfInterest pointOfInterestToUpdate = new PointOfInterest(pointOfInterest.getRowId(), pointOfInterest.getTitle(), pointOfInterest.getAddress(), pointOfInterest.getLatitude(), pointOfInterest.getLongitude(), pointOfInterest.getPoiCategory(), pointOfInterest.getPoiNote(), !pointOfInterest.isVisited());
+        Toast.makeText(this, "POI visited status changed to " + visited, Toast.LENGTH_SHORT).show();
+        BlocSpotApplication.getSharedDataSource().updatePointOfInterestVisited(pointOfInterestToUpdate);
+        mItemAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
     public void onCategorySelected(String selectedCategoryName) {
         mCategoryName = selectedCategoryName;
         BlocSpotApplication.getSharedDataSource().updatePointOfInterestCategory(mPointOfInterest, mCategoryName);
