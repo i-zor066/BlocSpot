@@ -40,7 +40,7 @@ public class ApplicationTest extends ApplicationTestCase<BlocSpotApplication> {
 
         assertNotNull(application.getDataSource());
 
-        PointOfInterest testPointOfInterest = new PointOfInterest(0l, "TestEntry", "10 Brock St, Kings Cross, London NW1 3FG, United Kingdom", 51.5261296f, -0.1394121f, "Unsorted", "notSetYet");
+        PointOfInterest testPointOfInterest = new PointOfInterest(0l, "TestEntry", "10 Brock St, Kings Cross, London NW1 3FG, United Kingdom", 51.5261296f, -0.1394121f, "Unsorted", "notSetYet", false);
         application.getDataSource().insertPointToDatabase(testPointOfInterest);
 
 

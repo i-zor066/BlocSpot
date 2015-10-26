@@ -123,7 +123,7 @@ public class SearchableActivity extends AppCompatActivity {
                 String address = (String) business.getJSONObject("location").getJSONArray("address").get(0) + ", " + (String) business.getJSONObject("location").getString("city");
                 float latitude = (float) business.getJSONObject("location").getJSONObject("coordinate").getDouble("latitude");
                 float longitude = (float) business.getJSONObject("location").getJSONObject("coordinate").getDouble("longitude");
-                PointOfInterest pointOfInterest = new PointOfInterest(-1, title, address, latitude, longitude, "Unsorted","notSetYet");
+                PointOfInterest pointOfInterest = new PointOfInterest(-1, title, address, latitude, longitude, "Unsorted","notSetYet", false);
                 pointsOfInterest.add(pointOfInterest);
 
             }

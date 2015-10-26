@@ -89,6 +89,7 @@ public class DataSource {
                 .setLongitude(pointOfInterest.getLongitude())
                 .setCategory(pointOfInterest.getPoiCategory())
                 .setNote(pointOfInterest.getPoiNote())
+                .setVisited(pointOfInterest.isVisited())
                 .insert(writableDatabase);
     }
 
@@ -121,7 +122,8 @@ public class DataSource {
         float longitude = PointsOfInterestTable.getLongitude(cursor);
         String poiCategory = PointsOfInterestTable.getPoiCategory(cursor);
         String poiNote = PointsOfInterestTable.getPoiNote(cursor);
-        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory, poiNote);
+        boolean visited = PointsOfInterestTable.isVisited(cursor);
+        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory, poiNote, visited);
         cursor.close();
         return pointOfInterest;
     }
@@ -135,7 +137,8 @@ public class DataSource {
         float longitude = PointsOfInterestTable.getLongitude(cursor);
         String poiCategory = PointsOfInterestTable.getPoiCategory(cursor);
         String poiNote = PointsOfInterestTable.getPoiNote(cursor);
-        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory, poiNote);
+        boolean visited = PointsOfInterestTable.isVisited(cursor);
+        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory, poiNote, visited);
         cursor.close();
         return pointOfInterest;
     }
@@ -180,7 +183,8 @@ public class DataSource {
         float longitude = PointsOfInterestTable.getLongitude(cursor);
         String poiCategory = PointsOfInterestTable.getPoiCategory(cursor);
         String poiNote = PointsOfInterestTable.getPoiNote(cursor);
-        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory, poiNote);
+        boolean visited = PointsOfInterestTable.isVisited(cursor);
+        PointOfInterest pointOfInterest = new PointOfInterest(rowId, title, address, latitude, longitude, poiCategory, poiNote, visited);
         //cursor.close();
         return pointOfInterest;
     }

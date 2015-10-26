@@ -17,6 +17,7 @@ public class PointsOfInterestTable extends Table {
     private static final String COLUMN_LONGITUDE = "longitude";
     private static final String COLUMN_POI_CATEGORY = "poi_category";
     private static final String COLUMN_POI_NOTE = "poi_note";
+    private static final String COLUMN_VISITED = "visited";
 
     public static class Builder implements Table.Builder {
 
@@ -49,6 +50,11 @@ public class PointsOfInterestTable extends Table {
 
         public Builder setNote(String poiNote) {
             values.put(COLUMN_POI_NOTE, poiNote);
+            return this;
+        }
+
+        public Builder setVisited(boolean visited) {
+            values.put(COLUMN_VISITED, visited);
             return this;
         }
 
@@ -85,6 +91,10 @@ public class PointsOfInterestTable extends Table {
 
     public static String getPoiNote(Cursor cursor) {
         return getString(cursor, COLUMN_POI_NOTE);
+    }
+
+    public static boolean isVisited(Cursor cursor) {
+        return getBoolean(cursor, COLUMN_VISITED);
     }
 
     public static Cursor getRowWithId(SQLiteDatabase readonlyDatabase, long rowId) {
@@ -125,6 +135,7 @@ public class PointsOfInterestTable extends Table {
                 + COLUMN_LATITUDE + " REAL,"
                 + COLUMN_LONGITUDE + " REAL,"
                 + COLUMN_POI_CATEGORY + " TEXT DEFAULT 'Unsorted',"
-                + COLUMN_POI_NOTE + " TEXT DEFAULT 'No note yet')";
+                + COLUMN_POI_NOTE + " TEXT DEFAULT 'No note yet' ,"
+                + COLUMN_VISITED + " INTEGER DEFAULT 0)";
     }
 }
