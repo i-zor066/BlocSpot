@@ -97,6 +97,11 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
 
         // GeoFences
 
+        addGeoFences();
+
+    }
+
+    private void addGeoFences() {
         mGeofences = new ArrayList<Geofence>();
 
         int size = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
