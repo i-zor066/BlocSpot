@@ -97,24 +97,39 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
 
         // GeoFences
 
+
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if (pointsOfInterest.size() > 0) {
+            addGeoFences();
+        }
+    }
+
+    private void addGeoFences() {
         mGeofences = new ArrayList<Geofence>();
 
         int size = BlocSpotApplication.getSharedDataSource().getAllPointsOfInterest().size();
 
         for (int i = 0; i < size; i++) {
-            String title = pointsOfInterest.get(i).getTitle();
-            float lat = pointsOfInterest.get(i).getLatitude();
-            float lon = pointsOfInterest.get(i).getLongitude();
+            if (!pointsOfInterest.get(i).isVisited()) {
+                String title = pointsOfInterest.get(i).getTitle();
+                float lat = pointsOfInterest.get(i).getLatitude();
+                float lon = pointsOfInterest.get(i).getLongitude();
 
-            mGeofences.add(new Geofence.Builder()
-                    .setRequestId(title)
-                    .setCircularRegion(lat, lon, GEOFENCE_RADIUS)
-                    .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                mGeofences.add(new Geofence.Builder()
+                        .setRequestId(title)
+                        .setCircularRegion(lat, lon, GEOFENCE_RADIUS)
+                        .setExpirationDuration(Geofence.NEVER_EXPIRE)
 //                    .setLoiteringDelay(LOITERING_DELAY)
-                    .setTransitionTypes(
-                            Geofence.GEOFENCE_TRANSITION_ENTER
+                        .setTransitionTypes(
+                                Geofence.GEOFENCE_TRANSITION_ENTER
 //                                    | Geofence.GEOFENCE_TRANSITION_DWELL
-                                    | Geofence.GEOFENCE_TRANSITION_EXIT).build());
+                                        | Geofence.GEOFENCE_TRANSITION_EXIT).build());
+            }
         }
 
         mGeofenceStore = new GeofenceStore(this, mGeofences);
@@ -217,6 +232,22 @@ public class MainActivity extends AppCompatActivity implements PointsOfInterestF
         showCategorySpinner(pointOfInterest);
         mPointOfInterest = pointOfInterest;
         mItemAdapter = itemAdapter;
+    }
+
+    @Override
+    public void onPointOfInterestCheckedChange(PointOfInterest pointOfInterest, ItemAdapter itemAdapter) {
+//        mItemAdapter = itemAdapter;
+//        boolean visited = !pointOfInterest.isVisited();
+//        PointOfInterest pointOfInterestToUpdate = new PointOfInterest(pointOfInterest.getRowId(), pointOfInterest.getTitle(), pointOfInterest.getAddress(), pointOfInterest.getLatitude(), pointOfInterest.getLongitude(), pointOfInterest.getPoiCategory(), pointOfInterest.getPoiNote(), !pointOfInterest.isVisited());
+//        Toast.makeText(this, "POI visited status changed to " + visited, Toast.LENGTH_SHORT).show();
+//        BlocSpotApplication.getSharedDataSource().updatePointOfInterestVisited(pointOfInterestToUpdate);
+//        mItemAdapter.notifyDataSetChanged();
+        PointOfInterest pointOfInterestFromDB = BlocSpotApplication.getSharedDataSource().getPOIfromDBwithRowId(pointOfInterest.getRowId());
+        boolean visited = !pointOfInterestFromDB.isVisited();
+        PointOfInterest pointOfInterestToUpdate = new PointOfInterest(pointOfInterestFromDB.getRowId(), pointOfInterestFromDB.getTitle(), pointOfInterestFromDB.getAddress(), pointOfInterestFromDB.getLatitude(), pointOfInterestFromDB.getLongitude(), pointOfInterestFromDB.getPoiCategory(), pointOfInterestFromDB.getPoiNote(), visited);
+        Toast.makeText(this, "POI visited status changed to " + visited, Toast.LENGTH_SHORT).show();
+        BlocSpotApplication.getSharedDataSource().updatePointOfInterestVisited(pointOfInterestToUpdate);
+
     }
 
     @Override

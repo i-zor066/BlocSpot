@@ -92,6 +92,12 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
 
     }
 
+    @Override
+    public void onPointOfInterestCheckedChanged(PointOfInterest pointOfInterest) {
+        listener.onPointOfInterestCheckedChange(pointOfInterest, itemAdapter);
+
+    }
+
     public void updateCategory(String categoryViewSelected) {
         itemAdapter.updateCategory(categoryViewSelected);
         itemAdapter.notifyDataSetChanged();
@@ -100,5 +106,6 @@ public class PointsOfInterestFragmentList extends Fragment implements ItemAdapte
     public interface OnPointOfInterestClickListener {
         void onPointOfInterestClick(PointOfInterest pointOfInterest);
         void onPointOfInterestLongClick(PointOfInterest pointOfInterest, ItemAdapter itemAdapter);
+        void onPointOfInterestCheckedChange(PointOfInterest pointOfInterest, ItemAdapter itemAdapter);
     }
 }

@@ -105,7 +105,7 @@ public class SavePointOfInterestYelpFragment extends DialogFragment implements A
             if(mCategory == null) {
                 Toast.makeText(getActivity(), "Please Select a Category.", Toast.LENGTH_SHORT).show();
             } else {
-                pointOfInterestToSave = new PointOfInterest(-1, pointOfInterestFromMarker.getTitle(), pointOfInterestFromMarker.getAddress(),pointOfInterestFromMarker.getLatitude(), pointOfInterestFromMarker.getLongitude(), mCategory, mNote);
+                pointOfInterestToSave = new PointOfInterest(-1, pointOfInterestFromMarker.getTitle(), pointOfInterestFromMarker.getAddress(),pointOfInterestFromMarker.getLatitude(), pointOfInterestFromMarker.getLongitude(), mCategory, mNote, false);
                 BlocSpotApplication.getSharedDataSource().insertPointToDatabase(pointOfInterestToSave);
 //                PointOfInterest poiTest = BlocSpotApplication.getSharedDataSource().getPOIfromDBwithTitle(pointOfInterestFromMarker.getTitle());
 //                Log.v("POI Note DB test", poiTest.getPoiNote());

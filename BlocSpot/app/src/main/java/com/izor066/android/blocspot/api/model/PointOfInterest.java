@@ -16,10 +16,11 @@ public class PointOfInterest implements Parcelable {
     private final float latitude;
     private final String poiCategory;
     private final String poiNote;
+    private final boolean visited;
 
 
 
-    public PointOfInterest(long rowId, String title, String address, float latitude, float longitude, String poiCategory, String poiNote) {
+    public PointOfInterest(long rowId, String title, String address, float latitude, float longitude, String poiCategory, String poiNote, boolean visited) {
 
         this.rowId = rowId;
         this.title = title;
@@ -28,6 +29,8 @@ public class PointOfInterest implements Parcelable {
         this.longitude = longitude;
         this.poiCategory = poiCategory;
         this.poiNote = poiNote;
+        this.visited = visited;
+
 
     }
 
@@ -60,6 +63,10 @@ public class PointOfInterest implements Parcelable {
         return poiNote;
     }
 
+    public boolean isVisited() {
+        return visited;
+    }
+
 
     @Override
     public String toString() {
@@ -71,6 +78,7 @@ public class PointOfInterest implements Parcelable {
                 ", latitude=" + latitude +
                 ", poiCategory='" + poiCategory + '\'' +
                 ", poiNote='" + poiNote + '\'' +
+                ", visited='" + visited + '\'' +
                 '}';
     }
 
@@ -90,6 +98,7 @@ public class PointOfInterest implements Parcelable {
         bundle.putFloat("longitude", longitude);
         bundle.putString("poiCategory", poiCategory);
         bundle.putString("poiNote", poiNote);
+        bundle.putBoolean("visited", visited);
 
         dest.writeBundle(bundle);
 
@@ -106,7 +115,8 @@ public class PointOfInterest implements Parcelable {
                     bundle.getFloat("latitude"),
                     bundle.getFloat("longitude"),
                     bundle.getString("poiCategory"),
-                    bundle.getString("poiNote"));
+                    bundle.getString("poiNote"),
+                    bundle.getBoolean("visited"));
         }
 
         public PointOfInterest[] newArray(int size) {
